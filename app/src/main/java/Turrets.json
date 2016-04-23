@@ -1,0 +1,31 @@
+{
+  "Turrets": [
+    {
+      "Id": "1",
+      "Damage": "100",
+      "Range": "1.01",
+      "RoF": "1.01",
+      "Cost": "100",
+      "Description": "One",
+      "Name": "ONE"
+    },
+    {
+      "Id": "2",
+      "Damage": "200",
+      "Range": "2.02",
+      "RoF": "2.02",
+      "Cost": "200",
+      "Description": "Two",
+      "Name": "TWO"
+    },
+    {
+      "Id": "3",
+      "Damage": "300",
+      "Range": "3.03",
+      "RoF": "3.03",
+      "Cost": "300",
+      "Description": "Three",
+      "Name": "THREE"
+    }
+  ]
+}
