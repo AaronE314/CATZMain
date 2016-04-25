@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //https://www.youtube.com/watch?v=ZQSu48J9TBg
 
     SupportMapFragment supportMapFragment;
+    public GoogleMap mMap;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
+        mMap = googleMap;
+        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
     }
 }
