@@ -15,10 +15,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
-import menu.catz.aaron.fragments.MainFragment;
-import menu.catz.aaron.fragments.OptionsFragment;
-import menu.catz.aaron.fragments.ShopFragment;
-import menu.catz.aaron.fragments.UpgradesFragment;
+import menu.catz.aaron.fragments.*;
+import menu.catz.aaron.controller.*;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
     //https://www.youtube.com/watch?annotation_id=annotation_2755209737&feature=iv&src_vid=ZQSu48J9TBg&v=tguOfRD8vYo
@@ -27,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     SupportMapFragment supportMapFragment;
     public GoogleMap mMap;
+    Controller control;
 
 
     @Override
@@ -119,5 +118,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        control = new Controller(this, mMap);
     }
 }

@@ -1,7 +1,10 @@
 package menu.catz.aaron.controller;
 
 import android.content.Context;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class Player {
     Controller control;
@@ -15,8 +18,7 @@ public class Player {
         control = _CONTROL;
         context = _CONTEXT;
         gps = new GPSTracker(context, this);
-        //TODO create a call to get online data
-        //TODO could have possibility for local save
+        render();
     }
     private void lvlUp() {
         maxHealth*=1.15;
@@ -34,5 +36,9 @@ public class Player {
     }
     public void updateLocation(){
         pos = new LatLng(gps.location.getLatitude(), gps.location.getLongitude());
+    }
+    private void render() {
+        control.mMap.addMarker(new MarkerOptions().position(pos).title(String.valueOf(Health)+ "/" + String.valueOf(maxHealth)));
+        control.mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
     }
 }

@@ -17,9 +17,12 @@ public class Controller {
     ArrayList<Zombie> zombies;
     ArrayList<Turret> turrets;
     private Timer Update;
+    private Timer Spawn;
+    GoogleMap mMap;
 
-    Controller(Context _CONTEXT, Class _CLASS) {
-        onNewActivity(_CONTEXT, _CLASS);
+    public Controller(Context _CONTEXT, GoogleMap _MAP) {
+        mMap = _MAP;
+        context = _CONTEXT;
         player = new Player(context, this);
         zombies = new ArrayList<>();
         Update = new Timer();
@@ -29,15 +32,22 @@ public class Controller {
                 update();
             }
         }, 0, 100);
-    }
-    public void onNewActivity(Context _CONTEXT, Class _CLASS) {
-        context = _CONTEXT;
-        updateContext();
+        Spawn = new Timer();
+        Update.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                newEnemy("1");
+            }
+        }, 0, 1000);
     }
     public void newEnemy (String _TYPE) {
         zombies.add(new Zombie(this, _TYPE));
+        render();
     }
-    public void newTurret (String _TYPE) { turrets.add(new Turret(this, _TYPE)); }
+    public void newTurret (String _TYPE) {
+        turrets.add(new Turret(this, _TYPE));
+        render();
+    }
     public void killCheck (int _ZOMBIE) {
             if (zombies.get(_ZOMBIE).Health <= 0) {
                 player.Money+=zombies.get(_ZOMBIE).Money;
@@ -46,12 +56,6 @@ public class Controller {
                 zombies.remove(_ZOMBIE);
             }
         }
-    private void updateContext () {
-        player.gps.stopUsingGPS();
-        player.context = context;
-        player.gps.context = context;
-        player.gps.getLocation();
-    }
     private void update() {
         zombieWalk();
         render();
@@ -62,8 +66,7 @@ public class Controller {
         }
     }
     private void render() {
-      /*TODO have variable for the map
-        mMap.clear();
+        //mMap.clear();
         mMap.addMarker(new MarkerOptions().position(player.pos).title(String.valueOf(player.Health)+ "/" + String.valueOf(player.maxHealth)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(player.pos));
         for (int i = 0; i < zombies.size(); i++) {
@@ -71,6 +74,6 @@ public class Controller {
         }
         for (int i = 0; i < turrets.size(); i++) {
             mMap.addMarker(new MarkerOptions().position(turrets.get(i).pos).title(String.valueOf(turrets.get(i).Name)));
-        }*/
+        }
     }
 }
