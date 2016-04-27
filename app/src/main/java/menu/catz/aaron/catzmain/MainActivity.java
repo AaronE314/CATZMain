@@ -20,8 +20,14 @@ import menu.catz.aaron.fragments.OptionsFragment;
 import menu.catz.aaron.fragments.ShopFragment;
 import menu.catz.aaron.fragments.UpgradesFragment;
 
+//has to implement NavigationView.OnNavigationItemSelectedListener for the navigation drawer
+//and have to implement OnMapReadyCallback for map
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
+
+    //Video on how to set up fragments with navigation drawer
     //https://www.youtube.com/watch?annotation_id=annotation_2755209737&feature=iv&src_vid=ZQSu48J9TBg&v=tguOfRD8vYo
+
+    //Videos on how to set up the map into the navigation drawer
     //https://www.youtube.com/watch?v=JWk3PXV6O98
     //https://www.youtube.com/watch?v=ZQSu48J9TBg
 
@@ -32,11 +38,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Creating a new instance of the supportMapFragment
         supportMapFragment = SupportMapFragment.newInstance();
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //seting up Drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -44,9 +53,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //set default fragment
         FragmentManager fm = getFragmentManager();
         fm.beginTransaction().replace(R.id.content_frame, new MainFragment()).commit();
 
+        //set location of on map ready function
         supportMapFragment.getMapAsync(this);
     }
 
@@ -80,23 +91,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        //Step 1: Create a new Fragment manager for switching fragments
         FragmentManager fm = getFragmentManager();
+        //Step 2: Create a new Support Fragment Manager
         android.support.v4.app.FragmentManager sFm = getSupportFragmentManager();
 
+        //Get id of item selected
         int id = item.getItemId();
 
+        //hide Support map fragment if it's added, if you don't hide it, the map will always be showing
         if(supportMapFragment.isAdded()) {
             sFm.beginTransaction().hide(supportMapFragment).commit();
         }
 
+        //replaces the Content_frame FrameLayout in Content_main (in layout) with the fragment clicked
         switch (id){
             case R.id.nav_map:
+                //Checking if map is added
                 if(!supportMapFragment.isAdded()){
+                    //add map if its not added
                     sFm.beginTransaction().add(R.id.map, supportMapFragment).commit();
                 } else {
+                    //show map if already added
                     sFm.beginTransaction().show(supportMapFragment).commit();
                 }
                 break;
+            //switching fragments
             case R.id.nav_store:
                 fm.beginTransaction().replace(R.id.content_frame, new ShopFragment()).commit();
                 break;
@@ -109,12 +129,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             default:
                 break;
         }
-
+        //closing the drawer after button is clicked
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    //Called when map is ready
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;

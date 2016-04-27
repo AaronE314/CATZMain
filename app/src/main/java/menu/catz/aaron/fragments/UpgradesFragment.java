@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import menu.catz.aaron.catzmain.R;
 
 public class UpgradesFragment extends Fragment {
+
+    //Creates the view of the fragment from the proper XML file in layout
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
