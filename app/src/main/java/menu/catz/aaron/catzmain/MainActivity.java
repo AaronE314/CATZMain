@@ -2,6 +2,7 @@ package menu.catz.aaron.catzmain;
 
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,9 +12,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import menu.catz.aaron.fragments.*;
 import menu.catz.aaron.controller.*;
@@ -115,9 +118,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+    }
+
+    @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        control = new Controller(this, mMap);
+        control = new Controller(this.getApplicationContext());
+        render();
+    }
+    public void render() {
+        mMap.addMarker(new MarkerOptions().position(control.player.pos).title(String.valueOf(control.player.Health)+"/"+String.valueOf(control.player.maxHealth)));
+        for (int i = 0; i < control.enemies.size(); i++) {
+            mMap.addMarker(new MarkerOptions().position(control.enemies.get(i).pos).title(String.valueOf(control.enemies.get(i).Health)+"/"+String.valueOf(control.enemies.get(i).maxHealth)));
+        }
     }
 }

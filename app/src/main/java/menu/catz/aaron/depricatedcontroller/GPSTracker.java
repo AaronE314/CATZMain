@@ -1,4 +1,4 @@
-package menu.catz.aaron.controller;
+package menu.catz.aaron.depricatedcontroller;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -16,27 +16,23 @@ import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 
-import com.google.android.gms.maps.model.LatLng;
-
 public class GPSTracker extends Service implements LocationListener {
 
     Context context;
+    private final Player player;
     Boolean isGPSEnables = false;
     Boolean isNetworkEnabled = false;
     Boolean canGetLocation = false;
     Location location;
-    LatLng pos;
-    Player player;
     private static long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0;
     private static long MIN_TIME_BW_UPDATES = 5000;
     protected LocationManager locationManager;
 
     GPSTracker(Context _CONTEXT, Player _PLAYER) {
-        player = _PLAYER;
         context = _CONTEXT;
+        player = _PLAYER;
         getLocation();
-        //pos = new LatLng(location.getLatitude(), location.getLongitude());
-        //player.updateLocation();
+        player.updateLocation();
     }
     public Location getLocation() {
         try {
@@ -112,8 +108,7 @@ public class GPSTracker extends Service implements LocationListener {
                 }
             }
         }
-        pos = new LatLng(location.getLatitude(), location.getLongitude());
-        //player.updateLocation();
+        player.updateLocation();
     }
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
