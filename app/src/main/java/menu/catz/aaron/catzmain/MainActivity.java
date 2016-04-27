@@ -139,6 +139,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        control = new Controller(this, mMap);
+        //control = new Controller(this, mMap);
     }
 }

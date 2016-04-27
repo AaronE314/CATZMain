@@ -10,6 +10,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.Scanner;
+
 import menu.catz.aaron.catzmain.R;
 
 public class ShopFragment extends Fragment {
@@ -18,6 +26,9 @@ public class ShopFragment extends Fragment {
     int arnImageId[] = new int[nTurretnum];
     String arsTurretname[] = new String[nTurretnum];
     int arnPrice[] = new int[nTurretnum];
+    int arnDamage[] = new int[nTurretnum];
+    int arnRange[] = new int[nTurretnum];
+    double ardRoF[] = new double[nTurretnum];
     ImageView ivTurret;
     TextView txtTname,txtPrice;
     int nTurretL = 0;
@@ -38,10 +49,18 @@ public class ShopFragment extends Fragment {
         arnImageId[1] = R.drawable.options_icon;
         arnImageId[2] = R.drawable.shop_icon;
         arnImageId[3] = R.drawable.upgrade_icon;
+        /*
         arsTurretname[0] = "Turret 1";
         arsTurretname[1] = "Turret 2";
         arsTurretname[2] = "Turret 3";
-        arsTurretname[3] = "Turret 4";
+        arsTurretname[3] = "Turret 4";*/
+        try {
+            load();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         Updateinfo(nTurretL);
 
         btnNext.setOnClickListener(new View.OnClickListener() {
@@ -71,10 +90,26 @@ public class ShopFragment extends Fragment {
 
     }
 
+    private void load() throws FileNotFoundException, JSONException {
+        String jsonString = "{" + "  \"Turrets\": [" + "    {" + "      \"Id\": \"1\"," + "      \"Damage\": \"100\"," + "      \"Range\": \"1.01\"," + "      \"RoF\": \"1.01\"," + "      \"Cost\": \"100\"," + "      \"Name\": \"ONE\"" + "    }," + "    {" + "      \"Id\": \"2\"," + "      \"Damage\": \"200\"," + "      \"Range\": \"2.02\"," + "      \"RoF\": \"2.02\"," + "      \"Cost\": \"200\"," + "      \"Name\": \"TWO\"" + "    }," + "    {" + "      \"Id\": \"3\"," + "      \"Damage\": \"300\"," + "      \"Range\": \"3.03\"," + "      \"RoF\": \"3.03\"," + "      \"Cost\": \"300\"," + "      \"Name\": \"THREE\"" + "    }," + "    {" + "      \"Id\": \"4\"," + "      \"Damage\": \"400\"," + "      \"Range\": \"4.04\"," + "      \"RoF\": \"4.04\"," + "      \"Cost\": \"400\"," + "      \"Name\": \"FOUR\"" + "    }" + "  ]" + "}";
+        /*Scanner fin = new Scanner(new FileReader("Turrets.json"));
+        while (fin.hasNextLine()) {
+            jsonString += fin.nextLine();
+        }*/
+        JSONObject obj = new JSONObject(jsonString);
+        JSONArray turrets = obj.getJSONArray("Turrets");
+        for (int i = 0; i < turrets.length(); ++i) {
+            obj = turrets.getJSONObject(i);
+            arnDamage[i] = obj.getInt("Damage");
+            ardRoF[i] = obj.getDouble("RoF");
+            arnRange[i] = obj.getInt("Range");
+            arsTurretname[i] = obj.getString("Name");
+        }
+    }
     public void Updateinfo(int nTurretL) {
         ivTurret.setImageResource(arnImageId[nTurretL]);
         txtTname.setText(arsTurretname[nTurretL]);
-        txtPrice.setText(arnPrice[nTurretL]);
+        //txtPrice.setText(arnPrice[nTurretL]);
     }
 
 }
