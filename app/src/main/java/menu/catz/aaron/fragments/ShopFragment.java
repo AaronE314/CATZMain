@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import menu.catz.aaron.catzmain.R;
+import menu.catz.aaron.controller.Controller;
 
 public class ShopFragment extends Fragment {
 
@@ -21,6 +22,7 @@ public class ShopFragment extends Fragment {
     ImageView ivTurret;
     TextView txtTname,txtPrice;
     int nTurretL = 0;
+    Controller control;
     //Creates the view of the fragment from the proper XML file in layout
     @Nullable
     @Override
@@ -66,6 +68,12 @@ public class ShopFragment extends Fragment {
                 Updateinfo(nTurretL);
             }
         });
+        btnBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //control.newTurret();
+            }
+        });
 
         return rootView;
 
@@ -74,7 +82,10 @@ public class ShopFragment extends Fragment {
     public void Updateinfo(int nTurretL) {
         ivTurret.setImageResource(arnImageId[nTurretL]);
         txtTname.setText(arsTurretname[nTurretL]);
-        txtPrice.setText(arnPrice[nTurretL]);
+//        txtPrice.setText(arnPrice[nTurretL]);
     }
 
+    public void setControl (Controller _CONTROL) {
+        control = _CONTROL;
+    }
 }

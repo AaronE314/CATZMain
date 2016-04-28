@@ -1,7 +1,11 @@
 package menu.catz.aaron.controller;
 
-/**
- * Created by Tyler Green on 2016-04-26.
- */
+import com.google.android.gms.maps.model.LatLng;
+
 public class Turret {
+    public LatLng pos;
+    public String Name = "Turret";
+    public Turret (LatLng _POS) {
+        pos = _POS;
+    }
 }

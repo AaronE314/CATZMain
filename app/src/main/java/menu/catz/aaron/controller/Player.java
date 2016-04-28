@@ -14,7 +14,7 @@ public class Player {
         pos = new LatLng(0,0);
         //gps = new GPSTracker(context, this);
     }
-    /*public void updateLocation() {
+    public void updateLocation() {
         pos = gps.pos;
-    }*/
+    }
 }

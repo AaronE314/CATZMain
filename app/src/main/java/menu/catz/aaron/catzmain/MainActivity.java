@@ -34,7 +34,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     SupportMapFragment supportMapFragment;
     public GoogleMap mMap;
-    Controller control;
+    public Controller control;
+    private ShopFragment shop;
+    private OptionsFragment option;
+    private UpgradesFragment upgrades;
 
 
     @Override
@@ -55,6 +58,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //instntiate fragments
+        shop = new ShopFragment();
+        upgrades = new UpgradesFragment();
+        option = new OptionsFragment();
+        control = new Controller(this);
+        shop.setControl(control);
+        option.setControl(control);
+        upgrades.setControl(control);
         //set default fragment
         FragmentManager fm = getFragmentManager();
         fm.beginTransaction().replace(R.id.content_frame, new MainFragment()).commit();
@@ -120,13 +131,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             //switching fragments
             case R.id.nav_store:
-                fm.beginTransaction().replace(R.id.content_frame, new ShopFragment()).commit();
+                fm.beginTransaction().replace(R.id.content_frame, shop).commit();
                 break;
             case R.id.nav_upgrades:
-                fm.beginTransaction().replace(R.id.content_frame, new UpgradesFragment()).commit();
+                fm.beginTransaction().replace(R.id.content_frame, upgrades).commit();
                 break;
             case R.id.nav_options:
-                fm.beginTransaction().replace(R.id.content_frame, new OptionsFragment()).commit();
+                fm.beginTransaction().replace(R.id.content_frame, option).commit();
                 break;
             default:
                 break;
@@ -147,13 +158,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        control = new Controller(this.getApplicationContext());
         render();
     }
     public void render() {
         mMap.addMarker(new MarkerOptions().position(control.player.pos).title(String.valueOf(control.player.Health)+"/"+String.valueOf(control.player.maxHealth)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(control.player.pos));
         for (int i = 0; i < control.enemies.size(); i++) {
             mMap.addMarker(new MarkerOptions().position(control.enemies.get(i).pos).title(String.valueOf(control.enemies.get(i).Health)+"/"+String.valueOf(control.enemies.get(i).maxHealth)));
+        }
+        for (int i = 0; i < control.turrets.size(); i++) {
+            mMap.addMarker(new MarkerOptions().position(control.turrets.get(i).pos).title(control.turrets.get(i).Name));
         }
     }
 }

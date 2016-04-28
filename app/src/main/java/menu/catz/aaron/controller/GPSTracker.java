@@ -35,8 +35,8 @@ public class GPSTracker extends Service implements LocationListener {
         player = _PLAYER;
         context = _CONTEXT;
         getLocation();
-        //pos = new LatLng(location.getLatitude(), location.getLongitude());
-        //player.updateLocation();
+        pos = new LatLng(location.getLatitude(), location.getLongitude());
+        player.updateLocation();
     }
     public Location getLocation() {
         try {
@@ -47,7 +47,7 @@ public class GPSTracker extends Service implements LocationListener {
                 canGetLocation = true;
                 if (isNetworkEnabled) {
                     if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
                     }
                     if (locationManager != null) {
                         location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -113,7 +113,7 @@ public class GPSTracker extends Service implements LocationListener {
             }
         }
         pos = new LatLng(location.getLatitude(), location.getLongitude());
-        //player.updateLocation();
+        player.updateLocation();
     }
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {

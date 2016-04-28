@@ -7,22 +7,29 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Controller {
-    Context context;
+    public Context context;
     public Player player;
     public ArrayList<Enemy> enemies;
-    Timer spawn;
+    public ArrayList<Turret> turrets;
+    private Timer spawn;
     public Controller (Context _CONTEXT) {
-        context = _CONTEXT;
-        player = new Player(context);
+        //context = _CONTEXT;
+        //player = new Player(context);
         enemies = new ArrayList<>();
-        newEnemy();
+        //turrets = new ArrayList<>();
+        //spawn = new Timer();
+        //newEnemy();
+        grid();
+    }
+    public void newTurret() {
+        turrets.add(new Turret(player.pos));
     }
     private void newEnemy() {
         int enemy = (int) Math.round(Math.random()*(player.Level-1))+1;
         int time = (int) Math.round(Math.random()*3000)+2000;
         LatLng pos;
         double Lat, Lng;
-        for (int i = 0; i < enemy; i++) {
+        for (int i = 0; i < 1000; i++) {
                 Lat = Math.random() * (player.View);
             Lng = player.View * Math.cos(Math.asin((Lat/player.View)));
             int quad = (int) Math.round(Math.random()*4);
@@ -49,13 +56,13 @@ public class Controller {
             }
         }, time);
     }
-    /*private void grid () {
+    private void grid () {
         for (double i = -85; i <=85; i+=0.01) {
             for (double y = -180; y <= 180; y+=0.01) {
                 enemies.add(new Enemy(new LatLng(i, y)));
             }
         }
-    }*/
+    }
 }
 //Latitude from -85 to 85
 //Longitude from -180 to 180
