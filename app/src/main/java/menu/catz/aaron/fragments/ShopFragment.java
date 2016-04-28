@@ -16,6 +16,8 @@ import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Scanner;
 
 import menu.catz.aaron.catzmain.R;
@@ -36,7 +38,6 @@ public class ShopFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View rootView = inflater.inflate(R.layout.fragment_shop, container,false);
 
         Button btnNext = (Button) rootView.findViewById(R.id.btnNext);
@@ -89,9 +90,26 @@ public class ShopFragment extends Fragment {
         return rootView;
 
     }
+    /*public String loadJSONFromAsset() {
+        String json = null;
+        try {
+            InputStream is = getAssets().open("Turrets.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
+
+    }*/
 
     private void load() throws FileNotFoundException, JSONException {
-        String jsonString = "{" + "  \"Turrets\": [" + "    {" + "      \"Id\": \"1\"," + "      \"Damage\": \"100\"," + "      \"Range\": \"1.01\"," + "      \"RoF\": \"1.01\"," + "      \"Cost\": \"100\"," + "      \"Name\": \"ONE\"" + "    }," + "    {" + "      \"Id\": \"2\"," + "      \"Damage\": \"200\"," + "      \"Range\": \"2.02\"," + "      \"RoF\": \"2.02\"," + "      \"Cost\": \"200\"," + "      \"Name\": \"TWO\"" + "    }," + "    {" + "      \"Id\": \"3\"," + "      \"Damage\": \"300\"," + "      \"Range\": \"3.03\"," + "      \"RoF\": \"3.03\"," + "      \"Cost\": \"300\"," + "      \"Name\": \"THREE\"" + "    }," + "    {" + "      \"Id\": \"4\"," + "      \"Damage\": \"400\"," + "      \"Range\": \"4.04\"," + "      \"RoF\": \"4.04\"," + "      \"Cost\": \"400\"," + "      \"Name\": \"FOUR\"" + "    }" + "  ]" + "}";
+        String jsonString = "";//"{" + "  \"Turrets\": [" + "    {" + "      \"Id\": \"1\"," + "      \"Damage\": \"100\"," + "      \"Range\": \"1.01\"," + "      \"RoF\": \"1.01\"," + "      \"Cost\": \"100\"," + "      \"Name\": \"ONE\"" + "    }," + "    {" + "      \"Id\": \"2\"," + "      \"Damage\": \"200\"," + "      \"Range\": \"2.02\"," + "      \"RoF\": \"2.02\"," + "      \"Cost\": \"200\"," + "      \"Name\": \"TWO\"" + "    }," + "    {" + "      \"Id\": \"3\"," + "      \"Damage\": \"300\"," + "      \"Range\": \"3.03\"," + "      \"RoF\": \"3.03\"," + "      \"Cost\": \"300\"," + "      \"Name\": \"THREE\"" + "    }," + "    {" + "      \"Id\": \"4\"," + "      \"Damage\": \"400\"," + "      \"Range\": \"4.04\"," + "      \"RoF\": \"4.04\"," + "      \"Cost\": \"400\"," + "      \"Name\": \"FOUR\"" + "    }" + "  ]" + "}";
         /*Scanner fin = new Scanner(new FileReader("Turrets.json"));
         while (fin.hasNextLine()) {
             jsonString += fin.nextLine();
@@ -104,12 +122,15 @@ public class ShopFragment extends Fragment {
             ardRoF[i] = obj.getDouble("RoF");
             arnRange[i] = obj.getInt("Range");
             arsTurretname[i] = obj.getString("Name");
+            arnPrice[i] = obj.getInt("Cost");
         }
     }
     public void Updateinfo(int nTurretL) {
         ivTurret.setImageResource(arnImageId[nTurretL]);
         txtTname.setText(arsTurretname[nTurretL]);
-        //txtPrice.setText(arnPrice[nTurretL]);
+        txtPrice.setText("$" + String.valueOf(arnPrice[nTurretL]));
     }
+
+
 
 }

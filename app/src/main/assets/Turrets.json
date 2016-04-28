@@ -6,7 +6,6 @@
       "Range": "1.01",
       "RoF": "1.01",
       "Cost": "100",
-      "Description": "One",
       "Name": "ONE"
     },
     {
@@ -15,7 +14,6 @@
       "Range": "2.02",
       "RoF": "2.02",
       "Cost": "200",
-      "Description": "Two",
       "Name": "TWO"
     },
     {
@@ -24,8 +22,15 @@
       "Range": "3.03",
       "RoF": "3.03",
       "Cost": "300",
-      "Description": "Three",
       "Name": "THREE"
+    },
+    {
+      "Id": "4",
+      "Damage": "400",
+      "Range": "4.04",
+      "RoF": "4.04",
+      "Cost": "400",
+      "Name": "FOUR"
     }
   ]
 }
