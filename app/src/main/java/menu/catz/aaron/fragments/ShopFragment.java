@@ -71,7 +71,7 @@ public class ShopFragment extends Fragment {
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //control.newTurret();
+                control.newTurret();
             }
         });
 

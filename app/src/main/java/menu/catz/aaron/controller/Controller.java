@@ -13,13 +13,12 @@ public class Controller {
     public ArrayList<Turret> turrets;
     private Timer spawn;
     public Controller (Context _CONTEXT) {
-        //context = _CONTEXT;
-        //player = new Player(context);
+        context = _CONTEXT;
+        player = new Player(context);
         enemies = new ArrayList<>();
-        //turrets = new ArrayList<>();
-        //spawn = new Timer();
-        //newEnemy();
-        grid();
+        turrets = new ArrayList<>();
+        spawn = new Timer();
+        newEnemy();
     }
     public void newTurret() {
         turrets.add(new Turret(player.pos));
@@ -29,7 +28,7 @@ public class Controller {
         int time = (int) Math.round(Math.random()*3000)+2000;
         LatLng pos;
         double Lat, Lng;
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < enemy; i++) {
                 Lat = Math.random() * (player.View);
             Lng = player.View * Math.cos(Math.asin((Lat/player.View)));
             int quad = (int) Math.round(Math.random()*4);
@@ -55,13 +54,6 @@ public class Controller {
                 newEnemy();
             }
         }, time);
-    }
-    private void grid () {
-        for (double i = -85; i <=85; i+=0.01) {
-            for (double y = -180; y <= 180; y+=0.01) {
-                enemies.add(new Enemy(new LatLng(i, y)));
-            }
-        }
     }
 }
 //Latitude from -85 to 85
