@@ -12,11 +12,13 @@
     tools:context="menu.catz.aaron.catzmain.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
+    <!-- Creates the FrameLayout for the fragments-->
     <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></FrameLayout>
 
+    <!-- Creates the FrameLayout for the Map-->
     <FrameLayout
         android:id="@+id/map"
         android:layout_width="match_parent"
