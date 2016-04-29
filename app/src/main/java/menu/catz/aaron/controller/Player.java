@@ -2,43 +2,19 @@ package menu.catz.aaron.controller;
 
 import android.content.Context;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 public class Player {
-    Controller control;
-    Context context;
-    LatLng pos;
-    int maxHealth, Health, Damage, Defence, Money, EXP, Level, EXPLevel;
-    double radius;
     GPSTracker gps;
-
-    Player (Context _CONTEXT, Controller _CONTROL) {
-        control = _CONTROL;
+    public LatLng pos;
+    public int Health=200, maxHealth=200, View = 1, Level = 1;
+    Context context;
+    Player (Context _CONTEXT) {
         context = _CONTEXT;
-        gps = new GPSTracker(context, this);
-        render();
+        pos = new LatLng(0,0);
+        //gps = new GPSTracker(context, this);
     }
-    private void lvlUp() {
-        maxHealth*=1.15;
-        Health = maxHealth;
-        EXP-=EXPLevel;
-        EXPLevel*=1.25;
-        Damage*=1.1;
-        Defence*=1.05;
-        Level++;
-    }
-    public void checkLevel () {
-        if (EXP >= EXPLevel) {
-            lvlUp();
-        }
-    }
-    public void updateLocation(){
-        pos = new LatLng(gps.location.getLatitude(), gps.location.getLongitude());
-    }
-    private void render() {
-        control.mMap.addMarker(new MarkerOptions().position(pos).title(String.valueOf(Health)+ "/" + String.valueOf(maxHealth)));
-        control.mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
+    public void updateLocation() {
+        pos = gps.pos;
     }
 }

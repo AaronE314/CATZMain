@@ -1,4 +1,4 @@
-package menu.catz.aaron.controller;
+package menu.catz.aaron.depricatedcontroller;
 
 import com.google.android.gms.maps.model.LatLng;
 import org.json.JSONArray;
@@ -11,8 +11,8 @@ import java.util.Scanner;
 
 public class Zombie {
     Controller control;
-    LatLng pos;
-    int Health, maxHealth, Damage, Defence, Atck, Def, Money, EXP;
+    public LatLng pos;
+    public int Health, maxHealth, Damage, Defence, Atck, Def, Money, EXP;
     private double Lat, Long, spdLat, spdLong;
     double spdMax= 1;
 
@@ -32,7 +32,14 @@ public class Zombie {
         getSpdLong();
         Lat = pos.latitude;
         Long = pos.longitude;
+        if (spdLat > Math.abs(pos.latitude - control.player.pos.latitude)) {
+            spdLat = Math.abs(pos.latitude - control.player.pos.latitude);
+        }
+        if (spdLong > Math.abs(pos.longitude - control.player.pos.longitude)) {
+            spdLong = Math.abs(pos.longitude - control.player.pos.longitude);
+        }
         if (pos.latitude > control.player.pos.latitude) {
+
             Lat -= spdLat;
         } else {
             Lat+= spdLat;
@@ -45,10 +52,10 @@ public class Zombie {
         pos = new LatLng(Lat, Long);
     }
     private void getSpdLat (){
-        spdLat = spdMax * Math.cos(Math.atan(((Lat - control.player.pos.latitude)/(Long - control.player.pos.longitude))));
+        spdLat = Math.abs(spdMax * Math.cos(Math.atan(((Lat - control.player.pos.latitude)/(Long - control.player.pos.longitude)))));
     }
     private void getSpdLong (){
-        spdLong = spdMax * Math.sin(Math.atan((Lat - control.player.pos.latitude)/(Long - control.player.pos.longitude)));
+        spdLong = Math.abs(spdMax * Math.sin(Math.atan((Lat - control.player.pos.latitude)/(Long - control.player.pos.longitude))));
     }
     private void attack (int _DEFENCE) {
         Atck = (Damage / _DEFENCE) * 10;

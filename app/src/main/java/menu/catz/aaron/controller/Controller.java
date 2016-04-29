@@ -1,79 +1,60 @@
 package menu.catz.aaron.controller;
 
 import android.content.Context;
-
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.MarkerOptions;
-
+import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Controller {
-
-    Context context;
-    Player player;
-    ArrayList<Zombie> zombies;
-    ArrayList<Turret> turrets;
-    private Timer Update;
-    private Timer Spawn;
-    GoogleMap mMap;
-
-    public Controller(Context _CONTEXT, GoogleMap _MAP) {
-        mMap = _MAP;
+    public Context context;
+    public Player player;
+    public ArrayList<Enemy> enemies;
+    public ArrayList<Turret> turrets;
+    private Timer spawn;
+    public Controller (Context _CONTEXT) {
         context = _CONTEXT;
-        player = new Player(context, this);
-        zombies = new ArrayList<>();
-        Update = new Timer();
-        Update.scheduleAtFixedRate(new TimerTask() {
+        player = new Player(context);
+        enemies = new ArrayList<>();
+        turrets = new ArrayList<>();
+        spawn = new Timer();
+        newEnemy();
+    }
+    public void newTurret() {
+        turrets.add(new Turret(player.pos));
+    }
+    private void newEnemy() {
+        int enemy = (int) Math.round(Math.random()*(player.Level-1))+1;
+        int time = (int) Math.round(Math.random()*3000)+2000;
+        LatLng pos;
+        double Lat, Lng;
+        for (int i = 0; i < enemy; i++) {
+                Lat = Math.random() * (player.View);
+            Lng = player.View * Math.cos(Math.asin((Lat/player.View)));
+            int quad = (int) Math.round(Math.random()*4);
+            if (quad == 1) {
+                Lat = player.pos.latitude + Lat;
+                Lng = player.pos.longitude + Lng;
+            } else if (quad == 2) {
+                Lat = player.pos.latitude - Lat;
+                Lng = player.pos.longitude + Lng;
+            } else if (quad == 3) {
+                Lat = player.pos.latitude + Lat;
+                Lng = player.pos.longitude - Lng;
+            } else {
+                Lat = player.pos.latitude - Lat;
+                Lng = player.pos.longitude - Lng;
+            }
+            pos = new LatLng(Lat, Lng);
+            enemies.add(new Enemy(pos));
+        }
+        spawn.schedule(new TimerTask() {
             @Override
             public void run() {
-                update();
+                newEnemy();
             }
-        }, 0, 100);
-        Spawn = new Timer();
-        Update.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                newEnemy("1");
-            }
-        }, 0, 1000);
-    }
-    public void newEnemy (String _TYPE) {
-        zombies.add(new Zombie(this, _TYPE));
-        render();
-    }
-    public void newTurret (String _TYPE) {
-        turrets.add(new Turret(this, _TYPE));
-        render();
-    }
-    public void killCheck (int _ZOMBIE) {
-            if (zombies.get(_ZOMBIE).Health <= 0) {
-                player.Money+=zombies.get(_ZOMBIE).Money;
-                player.EXP+=zombies.get(_ZOMBIE).EXP;
-                player.checkLevel();
-                zombies.remove(_ZOMBIE);
-            }
-        }
-    private void update() {
-        zombieWalk();
-        render();
-    }
-    private void zombieWalk(){
-        for (int i = 0; i < zombies.size(); i++) {
-            zombies.get(i).move();
-        }
-    }
-    private void render() {
-        //mMap.clear();
-        mMap.addMarker(new MarkerOptions().position(player.pos).title(String.valueOf(player.Health)+ "/" + String.valueOf(player.maxHealth)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(player.pos));
-        for (int i = 0; i < zombies.size(); i++) {
-             mMap.addMarker(new MarkerOptions().position(zombies.get(i).pos).title(String.valueOf(zombies.get(i).Health) + "/" + String.valueOf(zombies.get(i).maxHealth)));
-        }
-        for (int i = 0; i < turrets.size(); i++) {
-            mMap.addMarker(new MarkerOptions().position(turrets.get(i).pos).title(String.valueOf(turrets.get(i).Name)));
-        }
+        }, time);
     }
 }
+//Latitude from -85 to 85
+//Longitude from -180 to 180

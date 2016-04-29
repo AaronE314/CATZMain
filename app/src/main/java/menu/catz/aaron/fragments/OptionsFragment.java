@@ -8,9 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import menu.catz.aaron.catzmain.R;
+import menu.catz.aaron.controller.Controller;
 
 public class OptionsFragment extends Fragment {
-
+    Controller control;
     //Creates the view of the fragment from the proper XML file in layout
     @Nullable
     @Override
@@ -20,5 +21,8 @@ public class OptionsFragment extends Fragment {
 
         return rootView;
 
+    }
+    public void setControl (Controller _CONTROL) {
+        control = _CONTROL;
     }
 }

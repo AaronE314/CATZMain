@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 import menu.catz.aaron.catzmain.R;
+import menu.catz.aaron.controller.Controller;
 
 public class ShopFragment extends Fragment {
 
@@ -34,6 +35,7 @@ public class ShopFragment extends Fragment {
     ImageView ivTurret;
     TextView txtTname,txtPrice;
     int nTurretL = 0;
+    Controller control;
     //Creates the view of the fragment from the proper XML file in layout
     @Nullable
     @Override
@@ -86,6 +88,12 @@ public class ShopFragment extends Fragment {
                 Updateinfo(nTurretL);
             }
         });
+        btnBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                control.newTurret();
+            }
+        });
 
         return rootView;
 
@@ -131,6 +139,7 @@ public class ShopFragment extends Fragment {
         txtPrice.setText("$" + String.valueOf(arnPrice[nTurretL]));
     }
 
-
-
+    public void setControl (Controller _CONTROL) {
+        control = _CONTROL;
+    }
 }

@@ -2,10 +2,10 @@ package menu.catz.aaron.controller;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public class Turret {
+public class Enemy {
     public LatLng pos;
-    public String Name = "Turret";
-    public Turret (LatLng _POS) {
+    public int Health = 100, maxHealth = 100;
+    Enemy (LatLng _POS) {
         pos = _POS;
     }
 }
