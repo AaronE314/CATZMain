@@ -22,14 +22,8 @@ public class Controller {
         moveEnemy();
         newEnemy();
     }
-    public void newTurret() {
-        turrets.add(new Turret(new LatLng(player.pos.latitude, player.pos.longitude+1.01)));
-        scheduleAttack();
-        turrets.add(new Turret(new LatLng(player.pos.latitude, player.pos.longitude-1.01)));
-        scheduleAttack();
-        turrets.add(new Turret(new LatLng(player.pos.latitude+1.01, player.pos.longitude)));
-        scheduleAttack();
-        turrets.add(new Turret(new LatLng(player.pos.latitude-1.01, player.pos.longitude)));
+    public void newTurret(String _NAME) {
+        turrets.add(new Turret(player.pos, _NAME));
         scheduleAttack();
     }
     private void newEnemy() {
@@ -96,7 +90,7 @@ public class Controller {
         }
         if (turrets.get(index).Range > cdist && close != -1) {
             enemies.get(close).Health-=turrets.get(index).Dmg;
-            check(close);
+            killCheck(close);
         }
         turrets.get(index).Fire.schedule(new TimerTask() {
             @Override
@@ -105,7 +99,7 @@ public class Controller {
             }
         }, Math.round(1000*(1/turrets.get(index).RoF)));
     }
-    private void check (int index) {
+    private void killCheck (int index) {
         if (enemies.get(index).Health <= 0) {
             enemies.remove(index);
         }
