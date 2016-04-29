@@ -7,7 +7,7 @@ import com.google.android.gms.maps.model.LatLng;
 public class Player {
     GPSTracker gps;
     public LatLng pos;
-    public int Health=200, maxHealth=200, View = 1, Level = 1;
+    public int Health=200, maxHealth=200, View = 2, Level = 1;
     Context context;
     Player (Context _CONTEXT) {
         context = _CONTEXT;
