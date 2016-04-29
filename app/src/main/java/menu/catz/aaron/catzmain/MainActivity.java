@@ -158,9 +158,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        render();
+        mMap.addMarker(new MarkerOptions().position(control.player.pos).title(String.valueOf(control.player.Health)+"/"+String.valueOf(control.player.maxHealth)));
+        new Thread(){
+            @Override
+            public void run() {
+                PseudoTimer pT = new PseudoTimer();
+                while(true){
+                    pT.Update();
+                    if(pT.frameReady(60f)){
+                        new PseudoTimer().new UIThreadCommand(){
+                            @Override
+                            public void runCommand() {
+                                render();
+                            }
+                        }.start(MainActivity.this);
+
+                    }
+                }
+            }
+        }.start();
     }
     public void render() {
+        mMap.clear();
         mMap.addMarker(new MarkerOptions().position(control.player.pos).title(String.valueOf(control.player.Health)+"/"+String.valueOf(control.player.maxHealth)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(control.player.pos));
         for (int i = 0; i < control.enemies.size(); i++) {
