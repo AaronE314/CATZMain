@@ -1,6 +1,8 @@
 package menu.catz.aaron.fragments;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -20,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Scanner;
 
+import menu.catz.aaron.catzmain.JSONLoader;
 import menu.catz.aaron.catzmain.R;
 import menu.catz.aaron.controller.Controller;
 
@@ -36,6 +39,7 @@ public class ShopFragment extends Fragment {
     TextView txtTname,txtPrice;
     int nTurretL = 0;
     Controller control;
+    Context context;
     //Creates the view of the fragment from the proper XML file in layout
     @Nullable
     @Override
@@ -64,6 +68,7 @@ public class ShopFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         Updateinfo(nTurretL);
 
         btnNext.setOnClickListener(new View.OnClickListener() {
@@ -100,8 +105,10 @@ public class ShopFragment extends Fragment {
     }
     /*public String loadJSONFromAsset() {
         String json = null;
+        AssetManager assetManager = getResources().getAssets();
+        InputStream is = null;
         try {
-            InputStream is = getAssets().open("Turrets.json");
+            is = assetManager.open("Turrets.json");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -122,6 +129,7 @@ public class ShopFragment extends Fragment {
         while (fin.hasNextLine()) {
             jsonString += fin.nextLine();
         }*/
+        jsonString = JSONLoader.parseFileToString(context, "Turrets.json");
         JSONObject obj = new JSONObject(jsonString);
         JSONArray turrets = obj.getJSONArray("Turrets");
         for (int i = 0; i < turrets.length(); ++i) {
@@ -139,7 +147,8 @@ public class ShopFragment extends Fragment {
         txtPrice.setText("$" + String.valueOf(arnPrice[nTurretL]));
     }
 
-    public void setControl (Controller _CONTROL) {
+    public void setInfo (Controller _CONTROL,Context _CONTEXT) {
+        context = _CONTEXT;
         control = _CONTROL;
     }
 }

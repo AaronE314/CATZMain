@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         upgrades = new UpgradesFragment();
         option = new OptionsFragment();
         control = new Controller(this);
-        shop.setControl(control);
+
         option.setControl(control);
         upgrades.setControl(control);
         //set default fragment
@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //switching fragments
             case R.id.nav_store:
                 fm.beginTransaction().replace(R.id.content_frame, shop).commit();
+                shop.setInfo(control, this.getBaseContext());
                 break;
             case R.id.nav_upgrades:
                 fm.beginTransaction().replace(R.id.content_frame, upgrades).commit();
