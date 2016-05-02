@@ -10,8 +10,9 @@ public class Turret {
     public Timer Fire;
     public int Dmg = 10;
     public double RoF = 0.25, Range = 1;
-    public Turret (LatLng _POS) {
+    public Turret (LatLng _POS, String _NAME) {
         pos = _POS;
+        Name = _NAME;
         Fire = new Timer();
     }
 }

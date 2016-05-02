@@ -5,7 +5,7 @@ import com.google.android.gms.maps.model.LatLng;
 public class Enemy {
     public LatLng pos;
     public int Health = 100, maxHealth = 100;
-    private double speed = 0.01;
+    private double speed = 0.001;
     Enemy (LatLng _POS) {
         pos = _POS;
     }
