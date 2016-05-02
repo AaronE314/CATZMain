@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class JSONLoader {
+    //http://stackoverflow.com/questions/30232051/read-json-file-from-assets
     public static String getJson(Context context, String json){
         String jsonString=parseFileToString(context, json);
         return jsonString;
