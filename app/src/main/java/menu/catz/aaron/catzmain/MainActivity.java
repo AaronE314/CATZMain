@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ShopFragment shop;
     private OptionsFragment option;
     private UpgradesFragment upgrades;
+    public Toolbar toolbar;
 
 
     @Override
@@ -47,15 +48,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         supportMapFragment = SupportMapFragment.newInstance();
 
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        assert toolbar != null;
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
         //seting up Drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        //drawer.setDrawerListener(toggle);
+        assert drawer != null;
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
 
         //instntiate fragments
@@ -77,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        assert drawer != null;
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -96,8 +103,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
+        //int id = item.getItemId();
         return super.onOptionsItemSelected(item);
     }
 
@@ -145,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         //closing the drawer after button is clicked
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        assert drawer != null;
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -190,4 +197,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mMap.addMarker(new MarkerOptions().position(control.turrets.get(i).pos).title(control.turrets.get(i).Name));
         }
     }
+
 }

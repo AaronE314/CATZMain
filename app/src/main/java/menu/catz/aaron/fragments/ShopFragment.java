@@ -31,7 +31,7 @@ public class ShopFragment extends Fragment {
     private int arnRange[] = new int[nTurretnum];
     private double ardRoF[] = new double[nTurretnum];
     private ImageView ivTurret;
-    private TextView txtTname,txtPrice;
+    private TextView txtTname,txtPrice,txtDes;
     private int nTurretL = 0;
     Controller control;
     Context context;
@@ -46,6 +46,7 @@ public class ShopFragment extends Fragment {
         Button btnBuy = (Button) rootView.findViewById(R.id.btnBuy);
         txtTname = (TextView) rootView.findViewById(R.id.txtName);
         txtPrice = (TextView) rootView.findViewById(R.id.txtPrice);
+        txtDes = (TextView) rootView.findViewById(R.id.txtDes);
         ivTurret = (ImageView) rootView.findViewById(R.id.ivTurret);
         arnImageId[0] = R.drawable.map_icon;
         arnImageId[1] = R.drawable.options_icon;
@@ -54,9 +55,7 @@ public class ShopFragment extends Fragment {
 
         try {
             load();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (FileNotFoundException | JSONException e) {
             e.printStackTrace();
         }
 
