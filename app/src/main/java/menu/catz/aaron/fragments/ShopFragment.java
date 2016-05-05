@@ -20,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import menu.catz.aaron.catzmain.JSONLoader;
@@ -27,19 +28,15 @@ import menu.catz.aaron.catzmain.R;
 import menu.catz.aaron.controller.Controller;
 
 public class ShopFragment extends Fragment {
-
-    int nTurretnum = 4;
-    int arnImageId[] = new int[nTurretnum];
-    String arsTurretname[] = new String[nTurretnum];
-    int arnPrice[] = new int[nTurretnum];
-    int arnDamage[] = new int[nTurretnum];
-    int arnRange[] = new int[nTurretnum];
-    double ardRoF[] = new double[nTurretnum];
-    ImageView ivTurret;
-    TextView txtTname,txtPrice;
-    int nTurretL = 0;
-    Controller control;
-    Context context;
+    
+    private ArrayList<Integer> imageId, price, damage;
+    private ArrayList<Double> RoF, range;
+    private ArrayList<String> name;
+    private ImageView ivTurret;
+    private TextView txtName,txtPrice;
+    private int index = 0;
+    private Controller control;
+    private Context context;
     //Creates the view of the fragment from the proper XML file in layout
     @Nullable
     @Override
@@ -49,18 +46,19 @@ public class ShopFragment extends Fragment {
         Button btnNext = (Button) rootView.findViewById(R.id.btnNext);
         Button btnPrev = (Button) rootView.findViewById(R.id.btnPrev);
         Button btnBuy = (Button) rootView.findViewById(R.id.btnBuy);
-        txtTname = (TextView) rootView.findViewById(R.id.txtName);
+        txtName = (TextView) rootView.findViewById(R.id.txtName);
         txtPrice = (TextView) rootView.findViewById(R.id.txtPrice);
         ivTurret = (ImageView) rootView.findViewById(R.id.ivTurret);
-        arnImageId[0] = R.drawable.map_icon;
-        arnImageId[1] = R.drawable.options_icon;
-        arnImageId[2] = R.drawable.shop_icon;
-        arnImageId[3] = R.drawable.upgrade_icon;
-        /*
-        arsTurretname[0] = "Turret 1";
-        arsTurretname[1] = "Turret 2";
-        arsTurretname[2] = "Turret 3";
-        arsTurretname[3] = "Turret 4";*/
+        imageId = new ArrayList<>();
+        price = new ArrayList<>();
+        damage = new ArrayList<>();
+        RoF = new ArrayList<>();
+        range = new ArrayList<>();
+        name = new ArrayList<>();
+        imageId.add(R.drawable.map_icon);
+        imageId.add(R.drawable.options_icon);
+        imageId.add(R.drawable.shop_icon);
+        imageId.add(R.drawable.upgrade_icon);
         try {
             load();
         } catch (FileNotFoundException e) {
@@ -69,82 +67,59 @@ public class ShopFragment extends Fragment {
             e.printStackTrace();
         }
 
-        Updateinfo(nTurretL);
+        updateInfo(index);
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(nTurretL<(arnImageId.length-1)){
-                    nTurretL+=1;
+                if(index<(imageId.size()-1)){
+                    index+=1;
                 } else {
-                    nTurretL = 0;
+                    index = 0;
                 }
-                Updateinfo(nTurretL);
+                updateInfo(index);
             }
         });
         btnPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(nTurretL>0){
-                    nTurretL-=1;
+                if(index>0){
+                    index-=1;
                 } else {
-                    nTurretL=(arnImageId.length-1);
+                    index=(imageId.size()-1);
                 }
-                Updateinfo(nTurretL);
+                updateInfo(index);
             }
         });
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                control.newTurret(arsTurretname[nTurretL]);
+                control.newTurret(name.get(index), damage.get(index), range.get(index), price.get(index), RoF.get(index));
             }
         });
 
         return rootView;
 
     }
-    /*public String loadJSONFromAsset() {
-        String json = null;
-        AssetManager assetManager = getResources().getAssets();
-        InputStream is = null;
-        try {
-            is = assetManager.open("Turrets.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
-
-    }*/
 
     private void load() throws FileNotFoundException, JSONException {
-        String jsonString = "";//"{" + "  \"Turrets\": [" + "    {" + "      \"Id\": \"1\"," + "      \"Damage\": \"100\"," + "      \"Range\": \"1.01\"," + "      \"RoF\": \"1.01\"," + "      \"Cost\": \"100\"," + "      \"Name\": \"ONE\"" + "    }," + "    {" + "      \"Id\": \"2\"," + "      \"Damage\": \"200\"," + "      \"Range\": \"2.02\"," + "      \"RoF\": \"2.02\"," + "      \"Cost\": \"200\"," + "      \"Name\": \"TWO\"" + "    }," + "    {" + "      \"Id\": \"3\"," + "      \"Damage\": \"300\"," + "      \"Range\": \"3.03\"," + "      \"RoF\": \"3.03\"," + "      \"Cost\": \"300\"," + "      \"Name\": \"THREE\"" + "    }," + "    {" + "      \"Id\": \"4\"," + "      \"Damage\": \"400\"," + "      \"Range\": \"4.04\"," + "      \"RoF\": \"4.04\"," + "      \"Cost\": \"400\"," + "      \"Name\": \"FOUR\"" + "    }" + "  ]" + "}";
-        /*Scanner fin = new Scanner(new FileReader("Turrets.json"));
-        while (fin.hasNextLine()) {
-            jsonString += fin.nextLine();
-        }*/
+        String jsonString = "";
         jsonString = JSONLoader.parseFileToString(context, "Turrets.json");
         JSONObject obj = new JSONObject(jsonString);
         JSONArray turrets = obj.getJSONArray("Turrets");
         for (int i = 0; i < turrets.length(); ++i) {
             obj = turrets.getJSONObject(i);
-            arnDamage[i] = obj.getInt("Damage");
-            ardRoF[i] = obj.getDouble("RoF");
-            arnRange[i] = obj.getInt("Range");
-            arsTurretname[i] = obj.getString("Name");
-            arnPrice[i] = obj.getInt("Cost");
+            damage.add(obj.getInt("Damage"));
+            RoF.add(obj.getDouble("RoF"));
+            range.add(obj.getDouble("Range"));
+            name.add(obj.getString("Name"));
+            price.add(obj.getInt("Cost"));
         }
     }
-    public void Updateinfo(int nTurretL) {
-        ivTurret.setImageResource(arnImageId[nTurretL]);
-        txtTname.setText(arsTurretname[nTurretL]);
-        txtPrice.setText("$" + String.valueOf(arnPrice[nTurretL]));
+    private void updateInfo(int index) {
+        ivTurret.setImageResource(imageId.get(index));
+        txtName.setText(name.get(index));
+        txtPrice.setText("$" + price.get(index));
     }
 
     public void setInfo (Controller _CONTROL,Context _CONTEXT) {

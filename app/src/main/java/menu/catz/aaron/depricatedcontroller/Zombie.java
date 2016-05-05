@@ -86,7 +86,7 @@ public class Zombie {
     }
     private void zombieLoad(String _TYPE) throws FileNotFoundException, JSONException {
         String jsonString = "";
-        Scanner fin = new Scanner(new FileReader("Zombies.json"));
+        Scanner fin = new Scanner(new FileReader("Enemy.json"));
         while (fin.hasNextLine()) {
             jsonString+=fin.nextLine();
         }
