@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         option = new OptionsFragment();
         control = new Controller(this);
 
-        option.setControl(control);
+        option.setInfo(control, this);
         upgrades.setControl(control);
         //set default fragment
         FragmentManager fm = getFragmentManager();
