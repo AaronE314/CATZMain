@@ -6,13 +6,16 @@ import java.util.Timer;
 
 public class Turret {
     public LatLng pos;
-    public String Name = "Turret";
+    public String Name;
     public Timer Fire;
-    public int Dmg = 10;
-    public double RoF = 0.25, Range = 1;
-    public Turret (LatLng _POS, String _NAME) {
+    public int Dmg;
+    public double RoF, Range;
+    public Turret (LatLng _POS, String _NAME, int _DAMAGE, double _RANGE, double _RoF) {
         pos = _POS;
         Name = _NAME;
+        Dmg = _DAMAGE;
+        RoF = _RoF;
+        Range = _RANGE;
         Fire = new Timer();
     }
 }
