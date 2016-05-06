@@ -2,7 +2,6 @@ package menu.catz.aaron.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -17,11 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import menu.catz.aaron.catzmain.JSONLoader;
 import menu.catz.aaron.catzmain.R;
@@ -37,6 +32,7 @@ public class ShopFragment extends Fragment {
     private int index = 0;
     private Controller control;
     private Context context;
+
     //Creates the view of the fragment from the proper XML file in layout
     @Nullable
     @Override
@@ -103,8 +99,7 @@ public class ShopFragment extends Fragment {
     }
 
     private void load() throws FileNotFoundException, JSONException {
-        String jsonString = "";
-        jsonString = JSONLoader.parseFileToString(context, "Turrets.json");
+        String jsonString = JSONLoader.parseFileToString(context, "Turrets.json");
         JSONObject obj = new JSONObject(jsonString);
         JSONArray turrets = obj.getJSONArray("Turrets");
         for (int i = 0; i < turrets.length(); ++i) {
