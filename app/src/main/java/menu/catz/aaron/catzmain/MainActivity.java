@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 PseudoTimer pT = new PseudoTimer();
                 while(true){
                     pT.Update();
-                    if(pT.frameReady(60f)){
+                    if(pT.frameReady(30f)){
                         new PseudoTimer().new UIThreadCommand(){
                             @Override
                             public void runCommand() {

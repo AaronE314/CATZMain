@@ -2,12 +2,21 @@ package menu.catz.aaron.controller;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Timer;
+
 public class Enemy {
     public LatLng pos;
-    public int Health = 100, maxHealth = 100;
-    private double speed = 0.001;
-    Enemy (LatLng _POS) {
+    public int Health, maxHealth, atckSpeed, dmg, cash, EXP;
+    private String name;
+    private double speed;
+    public Timer attack;
+    Enemy (LatLng _POS, JSONObject obj) {
         pos = _POS;
+        load(obj);
+        attack = new Timer();
     }
     public void move (LatLng _POS) {
         double dLat, dLong, sLat, sLong, tLat, tLong;
@@ -32,5 +41,24 @@ public class Enemy {
             tLong+=sLong;
         }
         pos = new LatLng(tLat, tLong);
+    }
+    private void load(JSONObject obj) {
+        try {
+            maxHealth = Health = obj.getInt("Health");
+            speed = obj.getDouble("Speed");
+            atckSpeed = obj.getInt("AtckSpd");
+            name = obj.getString("Name");
+            dmg = obj.getInt("Damage");
+            cash = obj.getInt("Money");
+            EXP = obj.getInt("EXP");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    public void lvlUp() {
+        maxHealth*=1.15;
+        Health = maxHealth;
+        dmg *= 1.2;
+        speed *= 1.025;
     }
 }
