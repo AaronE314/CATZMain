@@ -146,15 +146,17 @@ public class Controller {
             MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.wilhelm);
             mPlayer.setVolume(100,100);
             mPlayer.start();
-            player.cash+= enemies.get(index).cash;
-            player.EXP+= enemies.get(index).EXP;
             if (index < (enemies.size()-1)) {
+                player.cash+= enemies.get(index).cash;
+                player.EXP+= enemies.get(index).EXP;
                 enemies.get(index).attack.cancel();
                 enemies.get(enemies.size() - 1).attack.cancel();
                 enemies.add(index, enemies.get(enemies.size() - 1));
                 enemies.remove(index + 1);
                 enemies.remove(enemies.size()-1);
-            } else {
+            } else if(index == (enemies.size()-1 )) {
+                player.cash+= enemies.get(index).cash;
+                player.EXP+= enemies.get(index).EXP;
                 enemies.get(index).attack.cancel();
                 enemies.remove(index);
             }

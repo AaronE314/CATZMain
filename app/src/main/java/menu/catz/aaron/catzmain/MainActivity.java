@@ -178,6 +178,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             @Override
                             public void runCommand() {
                                 render();
+                                upgrades.cashCheck();
+                                shop.cashCheck();
                             }
                         }.start(MainActivity.this);
 

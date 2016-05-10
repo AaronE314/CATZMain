@@ -28,7 +28,7 @@ public class ShopFragment extends Fragment {
     private ArrayList<Double> RoF, range;
     private ArrayList<String> name;
     private ImageView ivTurret;
-    private TextView txtName,txtPrice;
+    private TextView txtName,txtPrice, txtDes, txtCash;
     private int index = 0;
     private Controller control;
     private Context context;
@@ -45,6 +45,7 @@ public class ShopFragment extends Fragment {
         txtName = (TextView) rootView.findViewById(R.id.txtName);
         txtPrice = (TextView) rootView.findViewById(R.id.txtPrice);
         txtDes = (TextView) rootView.findViewById(R.id.txtDes);
+        txtCash = (TextView) rootView.findViewById(R.id.txtCash);
         ivTurret = (ImageView) rootView.findViewById(R.id.ivTurret);
         imageId = new ArrayList<>();
         price = new ArrayList<>();
@@ -56,12 +57,12 @@ public class ShopFragment extends Fragment {
         imageId.add(R.drawable.options_icon);
         imageId.add(R.drawable.shop_icon);
         imageId.add(R.drawable.upgrade_icon);
+        txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
         try {
             load();
         } catch (FileNotFoundException | JSONException e) {
             e.printStackTrace();
         }
-
         updateInfo(index);
 
         btnNext.setOnClickListener(new View.OnClickListener() {
@@ -90,11 +91,15 @@ public class ShopFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 control.newTurret(name.get(index), damage.get(index), range.get(index), price.get(index), RoF.get(index));
+                txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
             }
         });
 
         return rootView;
+    }
 
+    public void cashCheck () {
+        txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
     }
 
     private void load() throws FileNotFoundException, JSONException {
@@ -114,6 +119,7 @@ public class ShopFragment extends Fragment {
         ivTurret.setImageResource(imageId.get(index));
         txtName.setText(name.get(index));
         txtPrice.setText("$" + price.get(index));
+        txtDes.setText("RoF: " + String.valueOf(RoF.get(index)) + "\n Damage: " + String.valueOf(damage.get(index)) + "\n Range: " + range.get(index));
     }
 
     public void setInfo (Controller _CONTROL,Context _CONTEXT) {

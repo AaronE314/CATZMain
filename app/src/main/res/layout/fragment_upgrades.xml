@@ -147,17 +147,18 @@
             android:layout_height="wrap_content"
             android:id="@+id/sbGoldtoXp"
             android:indeterminate="false"
-            android:layout_alignTop="@+id/btnRoF"
-            android:layout_toRightOf="@+id/txtPlayer"
-            android:layout_alignRight="@+id/btnGoldtoXp"
-            android:layout_alignEnd="@+id/btnGoldtoXp" />
+            android:layout_above="@+id/txtCashtoXpCost"
+            android:layout_alignRight="@+id/btnXP"
+            android:layout_alignEnd="@+id/btnXP"
+            android:layout_alignLeft="@+id/txtRoFPrice"
+            android:layout_alignStart="@+id/txtRoFPrice" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Gold to Xp"
-            android:id="@+id/btnGoldtoXp"
-            android:layout_below="@+id/btnRoF"
+            android:text="Cash to Xp"
+            android:id="@+id/btnCashtoXp"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 
@@ -165,10 +166,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="$100"
-            android:id="@+id/txtGoldtoXpCost"
-            android:layout_alignBottom="@+id/btnGoldtoXp"
-            android:layout_centerHorizontal="true" />
+            android:text="Amount: 0 \nCost: $0"
+            android:id="@+id/txtCashtoXpCost"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Cash: $0"
+            android:id="@+id/txtCash"
+            android:layout_above="@+id/btnView"
+            android:layout_alignLeft="@+id/txtRangePrice"
+            android:layout_alignStart="@+id/txtRangePrice" />
 
     </RelativeLayout>
 </FrameLayout>
