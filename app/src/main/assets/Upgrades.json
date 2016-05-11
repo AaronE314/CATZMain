@@ -1,0 +1,28 @@
+{
+  "Upgrades": [
+    {
+      "Id": "plusHealth",
+      "Cost": "250"
+    },
+    {
+      "Id": "plusView",
+      "Cost": "250"
+    },
+    {
+      "Id": "plusDmg",
+      "Cost": "250"
+    },
+    {
+      "Id": "plusRange",
+      "Cost": "250"
+    },
+    {
+      "Id": "plusKills",
+      "Cost": "250"
+    },
+    {
+      "Id": "plusRoF",
+      "Cost": "250"
+    }
+  ]
+}

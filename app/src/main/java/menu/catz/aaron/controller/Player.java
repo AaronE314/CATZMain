@@ -12,9 +12,11 @@ public class Player {
     Player (Context _CONTEXT) {
         context = _CONTEXT;
         pos = new LatLng(0,0);
-        //gps = new GPSTracker(context, this);
+        gps = new GPSTracker(context, this);
+        updateLocation();
     }
     public void updateLocation() {
+        if (gps.pos!=null)
         pos = gps.pos;
     }
     private void lvlUp() {

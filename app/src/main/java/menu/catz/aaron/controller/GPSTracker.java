@@ -34,9 +34,9 @@ public class GPSTracker extends Service implements LocationListener {
     GPSTracker(Context _CONTEXT, Player _PLAYER) {
         player = _PLAYER;
         context = _CONTEXT;
-        getLocation();
+        location = getLocation();
+        if (location!=null)
         pos = new LatLng(location.getLatitude(), location.getLongitude());
-        player.updateLocation();
     }
     public Location getLocation() {
         try {

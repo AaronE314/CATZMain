@@ -68,47 +68,34 @@ public class UpgradesFragment extends Fragment implements SeekBar.OnSeekBarChang
 
     private View.OnClickListener btnListener = new View.OnClickListener() {
         public void onClick(View v) {
-            int id = v.getId();
+            int id = v.getId(), newCost;
             switch (id) {
                 case R.id.btnHP:
-                    if(control.player.cash>=100) {
-                        control.player.cash -= 100;
-                        txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
-                    }
+                    newCost = control.plusHealth();
+                    txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
                     break;
                 case R.id.btnView:
-                    if(control.player.cash>=100) {
-                        control.player.cash -= 100;
+                    newCost = control.plusView();
                         txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
-                    }
                     break;
                 case R.id.btnDmg:
-                    if(control.player.cash>=100) {
-                        control.player.cash -= 100;
+                    newCost = control.plusDmg();
                         txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
-                    }
                     break;
                 case R.id.btnXP:
-                    if(control.player.cash>=100) {
-                        control.player.cash -= 100;
+                    newCost = control.plusKills();
                         txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
-                    }
                     break;
                 case R.id.btnRange:
-                    if(control.player.cash>=100) {
-                        control.player.cash -= 100;
+                    newCost = control.plusRange();
                         txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
-                    }
                     break;
                 case R.id.btnRoF:
-                    if(control.player.cash>=100) {
-                        control.player.cash -= 100;
+                    newCost = control.plusRoF();
                         txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
-                    }
                     break;
                 case R.id.btnCashtoXp:
-                    control.player.cash -= nSBProgress;
-                    control.player.EXP += (nSBProgress / control.player.Level);
+                    control.plusEXP(nSBProgress);
                     txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
                     break;
                 default:
