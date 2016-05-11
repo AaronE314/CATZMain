@@ -10,4 +10,12 @@
         <item>Uranus</item>
         <item>Neptune</item>
     </string-array>
+
+    <string-array name="MapType_array">
+        <item>Hybrid</item>
+        <item>Terrain</item>
+        <item>None</item>
+        <item>Normal</item>
+        <item>Satellite</item>
+    </string-array>
 </resources>

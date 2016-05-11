@@ -17,7 +17,7 @@ import menu.catz.aaron.controller.Controller;
 public class UpgradesFragment extends Fragment implements SeekBar.OnSeekBarChangeListener{
     private Controller control;
     private View rootView;
-    private TextView txtCashtoXp, txtCash;
+    private TextView txtCashtoXp, txtCash, txtHealthCost,txtViewCost,txtDmgCost,txtRangeCost,txtXPCost,txtRoFCost;
     private int nSBProgress;
     private SeekBar sbGoldtoXp;
 
@@ -37,6 +37,13 @@ public class UpgradesFragment extends Fragment implements SeekBar.OnSeekBarChang
         Button btnCashtoXp = (Button) rootView.findViewById(R.id.btnCashtoXp);
         txtCashtoXp = (TextView) rootView.findViewById(R.id.txtCashtoXpCost);
         txtCash = (TextView) rootView.findViewById(R.id.txtCash);
+        txtDmgCost = (TextView) rootView.findViewById(R.id.txtDamagePrice);
+        txtDmgCost = (TextView) rootView.findViewById(R.id.txtHealthPrice);
+        txtDmgCost = (TextView) rootView.findViewById(R.id.txtRangePrice);
+        txtDmgCost = (TextView) rootView.findViewById(R.id.txtRoFPrice);
+        txtDmgCost = (TextView) rootView.findViewById(R.id.txtViewPrice);
+        txtDmgCost = (TextView) rootView.findViewById(R.id.txtXpPrice);
+
         sbGoldtoXp = (SeekBar) rootView.findViewById(R.id.sbGoldtoXp);
 
         txtCash.setText("Cash: $" + String.valueOf(control.player.cash));

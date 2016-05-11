@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         assert toolbar != null;
-        toolbar.setTitle("");
+        //toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
         //seting up Drawer
@@ -178,8 +178,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             @Override
                             public void runCommand() {
                                 render();
-                                upgrades.cashCheck();
-                                shop.cashCheck();
+                                try {
+                                    upgrades.cashCheck();
+                                    shop.cashCheck();
+                                } catch (Exception e) {
+
+                                }
+
                             }
                         }.start(MainActivity.this);
 
