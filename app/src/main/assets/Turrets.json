@@ -5,28 +5,32 @@
       "Range": "1.01",
       "RoF": "1.01",
       "Cost": "100",
-      "Name": "ONE"
+      "Name": "ONE",
+      "URL": "http://vignette4.wikia.nocookie.net/starcraft/images/9/9c/AutoTurret_SC2_Art1.jpg/revision/latest?cb=20081030000857"
     },
     {
       "Damage": "200",
       "Range": "2.02",
       "RoF": "2.02",
       "Cost": "200",
-      "Name": "TWO"
+      "Name": "TWO",
+      "URL": "http://vignette4.wikia.nocookie.net/starcraft/images/9/9c/AutoTurret_SC2_Art1.jpg/revision/latest?cb=20081030000857"
     },
     {
       "Damage": "300",
       "Range": "3.03",
       "RoF": "3.03",
       "Cost": "300",
-      "Name": "THREE"
+      "Name": "THREE",
+      "URL": "http://vignette4.wikia.nocookie.net/starcraft/images/9/9c/AutoTurret_SC2_Art1.jpg/revision/latest?cb=20081030000857"
     },
     {
       "Damage": "400",
       "Range": "4.04",
       "RoF": "4.04",
       "Cost": "400",
-      "Name": "FOUR"
+      "Name": "FOUR",
+      "URL": "http://vignette4.wikia.nocookie.net/starcraft/images/9/9c/AutoTurret_SC2_Art1.jpg/revision/latest?cb=20081030000857"
     }
   ]
 }

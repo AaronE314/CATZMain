@@ -2,6 +2,8 @@ package menu.catz.aaron.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,14 +12,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
-
 import menu.catz.aaron.catzmain.JSONLoader;
 import menu.catz.aaron.catzmain.R;
 import menu.catz.aaron.controller.Controller;
@@ -27,6 +30,7 @@ public class ShopFragment extends Fragment {
     private ArrayList<Integer> imageId, price, damage;
     private ArrayList<Double> RoF, range;
     private ArrayList<String> name;
+    private ArrayList<Bitmap> img;
     private ImageView ivTurret;
     private TextView txtName,txtPrice;
     private int index = 0;
@@ -51,6 +55,7 @@ public class ShopFragment extends Fragment {
         RoF = new ArrayList<>();
         range = new ArrayList<>();
         name = new ArrayList<>();
+        img = new ArrayList<>();
         imageId.add(R.drawable.map_icon);
         imageId.add(R.drawable.options_icon);
         imageId.add(R.drawable.shop_icon);
@@ -109,10 +114,12 @@ public class ShopFragment extends Fragment {
             range.add(obj.getDouble("Range"));
             name.add(obj.getString("Name"));
             price.add(obj.getInt("Cost"));
+            //img.add(getBitmapFromURL(obj.getString("URL")));
         }
     }
     private void updateInfo(int index) {
         ivTurret.setImageResource(imageId.get(index));
+        //ivTurret.setImageBitmap(img.get(index));
         txtName.setText(name.get(index));
         txtPrice.setText("$" + price.get(index));
     }
@@ -120,5 +127,19 @@ public class ShopFragment extends Fragment {
     public void setInfo (Controller _CONTROL,Context _CONTEXT) {
         context = _CONTEXT;
         control = _CONTROL;
+    }
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

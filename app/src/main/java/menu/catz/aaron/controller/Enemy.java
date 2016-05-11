@@ -1,5 +1,7 @@
 package menu.catz.aaron.controller;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONException;
@@ -13,9 +15,11 @@ public class Enemy {
     private String name;
     private double speed;
     public Timer attack;
+    GroundOverlayOptions ground;
     Enemy (LatLng _POS, JSONObject obj) {
         pos = _POS;
         load(obj);
+        //GroundOverlayOptions newarkMap = new GroundOverlayOptions().image(BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922)).position(pos, 1000f);
         attack = new Timer();
     }
     public void move (LatLng _POS) {

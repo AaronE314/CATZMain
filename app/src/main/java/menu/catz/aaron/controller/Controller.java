@@ -1,7 +1,6 @@
 package menu.catz.aaron.controller;
 
 import android.content.Context;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -9,8 +8,6 @@ import com.google.android.gms.maps.model.LatLng;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -187,6 +184,7 @@ public class Controller {
             System.exit(69);
         }
     }
+
 }
 //Latitude from -85 to 85
 //Longitude from -180 to 180
