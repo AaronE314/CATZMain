@@ -2,16 +2,13 @@ package menu.catz.aaron.controller;
 
 import android.content.Context;
 import android.media.MediaPlayer;
-
 import com.google.android.gms.maps.model.LatLng;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import menu.catz.aaron.catzmain.JSONLoader;
 import menu.catz.aaron.catzmain.R;
 
@@ -20,6 +17,8 @@ public class Controller {
     public Player player;
     public ArrayList<Enemy> enemies;
     public ArrayList<Turret> turrets;
+    public ArrayList<String> ids;
+    public ArrayList<Integer> costs;
     private ArrayList<JSONObject> enemydata;
     private Timer spawn, move;
 
@@ -29,8 +28,11 @@ public class Controller {
         enemies = new ArrayList<>();
         turrets = new ArrayList<>();
         enemydata = new ArrayList<>();
+        ids = new ArrayList<>();
+        costs = new ArrayList<>();
         spawn = new Timer();
         move = new Timer();
+        loadUpgrades();
         loadEnemy();
         moveEnemy();
         newEnemy();
@@ -80,7 +82,6 @@ public class Controller {
                 }
             }, time);
         }
-
     private void loadEnemy() {
         try {
             String jsonString = JSONLoader.parseFileToString(context, "Enemy.json");
@@ -128,7 +129,7 @@ public class Controller {
             mPlayer.setVolume(100,100);
             mPlayer.start();
             enemies.get(close).Health -= turrets.get(index).Dmg;
-            killCheck(close);
+            killCheck(close, ind);
         }
         turrets.get(index).Fire.schedule(new TimerTask() {
             @Override
@@ -137,24 +138,28 @@ public class Controller {
             }
         }, Math.round(1000 * (1 / turrets.get(index).RoF)));
     }
-    private void killCheck(int index) {
+    private void killCheck(int index, int ind) {
         if (enemies.get(index).Health <= 0) {
             //String sUrl = "http://soundbible.com/grab.php?id=1986&type=mp3"; //URL for a generic explosion sound
             MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.wilhelm);
             mPlayer.setVolume(100,100);
             mPlayer.start();
-            player.cash+= enemies.get(index).cash;
-            player.EXP+= enemies.get(index).EXP;
             if (index < (enemies.size()-1)) {
+                player.cash+= enemies.get(index).cash;
+                player.EXP+= enemies.get(index).EXP;
                 enemies.get(index).attack.cancel();
                 enemies.get(enemies.size() - 1).attack.cancel();
                 enemies.add(index, enemies.get(enemies.size() - 1));
                 enemies.remove(index + 1);
                 enemies.remove(enemies.size()-1);
-            } else {
+            } else if(index == (enemies.size()-1 )) {
+                player.cash+= enemies.get(index).cash;
+                player.EXP+= enemies.get(index).EXP;
                 enemies.get(index).attack.cancel();
                 enemies.remove(index);
             }
+            turrets.get(ind).kills++;
+            turrets.get(ind).lvlCheck();
             player.checkLevel();
         }
     }
@@ -179,12 +184,130 @@ public class Controller {
             }
         }, Math.round(enemies.get(ind).atckSpeed));
     }
+    private void loadUpgrades() {
+        try {
+            String jsonString = JSONLoader.parseFileToString(context, "Upgrades.json");
+            JSONObject obj = new JSONObject(jsonString);
+            JSONArray upgrades = obj.getJSONArray("Upgrades");
+            for (int i = 0; i < upgrades.length(); i++) {
+                ids.add(upgrades.getJSONObject(i).getString("Id"));
+                costs.add(upgrades.getJSONObject(i).getInt("Cost"));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
     private void kill() {
         if (player.Health <= 0) {
             System.exit(69);
         }
     }
-
+    public int plusHealth() {
+        int index = -1;
+        for (int i = 0; i < ids.size(); i++) {
+            if (ids.get(i).equals("plusHealth")) {
+                index = i;
+                break;
+            }
+        }
+        if (player.cash >= costs.get(index)) {
+            player.cash-=costs.get(index);
+            player.Health+=(player.maxHealth*0.20);
+            costs.set(index,(int) Math.round(costs.get(index)*1.25));
+        }
+        return costs.get(index);
+    }
+    public int plusView() {
+        int index = -1;
+        for (int i = 0; i < ids.size(); i++) {
+            if (ids.get(i).equals("plusView")) {
+                index = i;
+                break;
+            }
+        }
+        if (player.cash >= costs.get(index)) {
+            player.cash-=costs.get(index);
+            player.View+=1;
+            costs.set(index,(int) Math.round(costs.get(index)*1.25));
+        }
+        return costs.get(index);
+    }
+    public int plusDmg() {
+        int index = -1;
+        for (int i = 0; i < ids.size(); i++) {
+            if (ids.get(i).equals("plusDmg")) {
+                index = i;
+                break;
+            }
+        }
+        if (player.cash >= costs.get(index)) {
+            player.cash-=costs.get(index);
+            for (int i = 0; i < turrets.size(); i++) {
+                turrets.get(i).Dmg = (int) Math.round(turrets.get(i).Dmg*1.25);
+            }
+            costs.set(index,(int) Math.round(costs.get(index)*1.25));
+        }
+        return costs.get(index);
+    }
+    public int plusRange() {
+        int index = -1;
+        for (int i = 0; i < ids.size(); i++) {
+            if (ids.get(i).equals("plusRange")) {
+                index = i;
+                break;
+            }
+        }
+        if (player.cash >= costs.get(index)) {
+            player.cash-=costs.get(index);
+            for (int i = 0; i < turrets.size(); i++) {
+                turrets.get(i).Range += 0.5;
+            }
+            costs.set(index,(int) Math.round(costs.get(index)*1.25));
+        }
+        return costs.get(index);
+    }
+    public int plusKills() {
+        int index = -1;
+        for (int i = 0; i < ids.size(); i++) {
+            if (ids.get(i).equals("plusKills")) {
+                index = i;
+                break;
+            }
+        }
+        if (player.cash >= costs.get(index)) {
+            player.cash-=costs.get(index);
+            for (int i = 0; i < turrets.size(); i++) {
+                turrets.get(i).kills += (int) Math.round(turrets.get(i).maxKills*0.25);
+                turrets.get(i).lvlCheck();
+            }
+            costs.set(index,(int) Math.round(costs.get(index)*1.25));
+        }
+        return costs.get(index);
+    }
+    public int plusRoF() {
+        int index = -1;
+        for (int i = 0; i < ids.size(); i++) {
+            if (ids.get(i).equals("plusRoF")) {
+                index = i;
+                break;
+            }
+        }
+        if (player.cash >= costs.get(index)) {
+            player.cash-=costs.get(index);
+            for (int i = 0; i < turrets.size(); i++) {
+                turrets.get(i).RoF += 0.05;
+            }
+            costs.set(index,(int) Math.round(costs.get(index)*1.25));
+        }
+        return costs.get(index);
+    }
+    public void plusEXP(int cost) {
+        if (player.cash >= cost) {
+            player.cash-=cost;
+            player.EXP+= (cost/player.Level);
+            player.checkLevel();
+        }
+    }
 }
 //Latitude from -85 to 85
 //Longitude from -180 to 180

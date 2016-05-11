@@ -11,19 +11,176 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="UPGRADES!!!"
-            android:id="@+id/textView4"
-            android:layout_gravity="center"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:text="Player Upgrades"
+            android:id="@+id/txtPlayer"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Button"
-            android:id="@+id/button"
+            android:text="+ Health"
+            android:id="@+id/btnHP"
+            android:layout_below="@+id/txtPlayer"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+ View Distance"
+            android:id="@+id/btnView"
+            android:layout_above="@+id/textView3"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+ Bonus XP"
+            android:id="@+id/btnXP"
+            android:layout_alignTop="@+id/btnRange"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Turret Upgrades"
+            android:id="@+id/textView3"
+            android:layout_marginTop="62dp"
+            android:layout_below="@+id/btnHP"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+ Damage"
+            android:id="@+id/btnDmg"
+            android:layout_below="@+id/textView3"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="35dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+ Range"
+            android:id="@+id/btnRange"
+            android:layout_alignTop="@+id/btnDmg"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="$100"
+            android:id="@+id/txtHealthPrice"
+            android:layout_alignTop="@+id/txtViewPrice"
+            android:layout_alignRight="@+id/btnHP"
+            android:layout_alignEnd="@+id/btnHP" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="$100"
+            android:id="@+id/txtViewPrice"
+            android:layout_below="@+id/btnView"
+            android:layout_alignLeft="@+id/btnView"
+            android:layout_alignStart="@+id/btnView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="$100"
+            android:id="@+id/txtDamagePrice"
+            android:layout_below="@+id/btnDmg"
+            android:layout_alignLeft="@+id/txtHealthPrice"
+            android:layout_alignStart="@+id/txtHealthPrice" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="$100"
+            android:id="@+id/txtRangePrice"
+            android:layout_below="@+id/btnRange"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="$100"
+            android:id="@+id/txtXpPrice"
+            android:layout_below="@+id/btnXP"
+            android:layout_toRightOf="@+id/txtViewPrice"
+            android:layout_toEndOf="@+id/txtViewPrice" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+ RoF"
+            android:id="@+id/btnRoF"
+            android:layout_marginTop="38dp"
+            android:layout_below="@+id/txtDamagePrice"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="$100"
+            android:id="@+id/txtRoFPrice"
+            android:layout_below="@+id/btnRoF"
+            android:layout_alignRight="@+id/btnRoF"
+            android:layout_alignEnd="@+id/btnRoF" />
+
+        <SeekBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sbGoldtoXp"
+            android:indeterminate="false"
+            android:layout_above="@+id/txtCashtoXpCost"
+            android:layout_alignRight="@+id/btnXP"
+            android:layout_alignEnd="@+id/btnXP"
+            android:layout_alignLeft="@+id/txtRoFPrice"
+            android:layout_alignStart="@+id/txtRoFPrice" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cash to Xp"
+            android:id="@+id/btnCashtoXp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Amount: 0 \nCost: $0"
+            android:id="@+id/txtCashtoXpCost"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Cash: $0"
+            android:id="@+id/txtCash"
+            android:layout_above="@+id/btnView"
+            android:layout_alignLeft="@+id/txtRangePrice"
+            android:layout_alignStart="@+id/txtRangePrice" />
+
     </RelativeLayout>
 </FrameLayout>

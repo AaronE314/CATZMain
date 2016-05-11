@@ -1,9 +1,5 @@
 package menu.catz.aaron.catzmain;
 
-/**
- * Created by Zacc on 2016-04-28.
- */
-
 public class PseudoTimer {
     private long[] alFrameCount;
     private long lInternalTime;

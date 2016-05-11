@@ -77,6 +77,15 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Cash: $0"
+            android:id="@+id/txtCash"
+            android:layout_alignBottom="@+id/btnBuy"
+            android:layout_centerHorizontal="true" />
+
     </RelativeLayout>
 
 </FrameLayout>

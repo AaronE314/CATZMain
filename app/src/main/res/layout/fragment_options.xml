@@ -12,15 +12,73 @@
             android:layout_height="match_parent"
             android:layout_gravity="center">
 
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner"
+                android:spinnerMode="dropdown"
+                android:layout_below="@+id/textView3"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Options?"
+                android:id="@+id/radioButton"
+                android:layout_below="@+id/spinner"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:checked="false" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="OPTIONS!!"
-                android:id="@+id/textView5"
-                android:layout_gravity="center"
-                android:layout_centerVertical="true"
+                android:text="Options"
+                android:id="@+id/textView3"
+                android:layout_marginTop="55dp"
+                android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reticulate splines?"
+                android:id="@+id/radioButton2"
+                android:checked="false"
+                android:layout_below="@+id/spinner"
+                android:layout_centerHorizontal="true" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7.8/10 IGN?"
+                android:id="@+id/radioButton3"
+                android:layout_below="@+id/radioButton"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:checked="false" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Is your girlfriend there?"
+                android:id="@+id/radioButton4"
+                android:layout_below="@+id/radioButton2"
+                android:layout_alignLeft="@+id/radioButton2"
+                android:layout_alignStart="@+id/radioButton2"
+                android:checked="false" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remove Prabh?"
+                android:id="@+id/checkBox"
+                android:checked="true"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
         </RelativeLayout>
     </FrameLayout>
 </FrameLayout>
