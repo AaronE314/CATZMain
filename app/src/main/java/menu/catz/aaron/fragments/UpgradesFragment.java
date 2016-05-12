@@ -38,11 +38,11 @@ public class UpgradesFragment extends Fragment implements SeekBar.OnSeekBarChang
         txtCashtoXp = (TextView) rootView.findViewById(R.id.txtCashtoXpCost);
         txtCash = (TextView) rootView.findViewById(R.id.txtCash);
         txtDmgCost = (TextView) rootView.findViewById(R.id.txtDamagePrice);
-        txtDmgCost = (TextView) rootView.findViewById(R.id.txtHealthPrice);
-        txtDmgCost = (TextView) rootView.findViewById(R.id.txtRangePrice);
-        txtDmgCost = (TextView) rootView.findViewById(R.id.txtRoFPrice);
-        txtDmgCost = (TextView) rootView.findViewById(R.id.txtViewPrice);
-        txtDmgCost = (TextView) rootView.findViewById(R.id.txtXpPrice);
+        txtHealthCost = (TextView) rootView.findViewById(R.id.txtHealthPrice);
+        txtRangeCost = (TextView) rootView.findViewById(R.id.txtRangePrice);
+        txtRoFCost = (TextView) rootView.findViewById(R.id.txtRoFPrice);
+        txtViewCost = (TextView) rootView.findViewById(R.id.txtViewPrice);
+        txtXPCost = (TextView) rootView.findViewById(R.id.txtXpPrice);
 
         sbGoldtoXp = (SeekBar) rootView.findViewById(R.id.sbGoldtoXp);
 
@@ -72,27 +72,34 @@ public class UpgradesFragment extends Fragment implements SeekBar.OnSeekBarChang
             switch (id) {
                 case R.id.btnHP:
                     newCost = control.plusHealth();
+                    System.out.println("HIIIII: " + newCost);
+                    txtHealthCost.setText("$" + String.valueOf(newCost));
                     txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
                     break;
                 case R.id.btnView:
                     newCost = control.plusView();
-                        txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
+                    txtViewCost.setText("$" + String.valueOf(newCost));
+                    txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
                     break;
                 case R.id.btnDmg:
                     newCost = control.plusDmg();
-                        txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
+                    txtDmgCost.setText("$" + String.valueOf(newCost));
+                    txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
                     break;
                 case R.id.btnXP:
                     newCost = control.plusKills();
-                        txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
+                    txtXPCost.setText("$" + String.valueOf(newCost));
+                    txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
                     break;
                 case R.id.btnRange:
                     newCost = control.plusRange();
-                        txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
+                    txtRangeCost.setText("$" + String.valueOf(newCost));
+                    txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
                     break;
                 case R.id.btnRoF:
                     newCost = control.plusRoF();
-                        txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
+                    txtRoFCost.setText("$" + String.valueOf(newCost));
+                    txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
                     break;
                 case R.id.btnCashtoXp:
                     control.plusEXP(nSBProgress);

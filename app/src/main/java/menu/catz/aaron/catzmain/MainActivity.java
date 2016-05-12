@@ -65,10 +65,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         //instntiate fragments
+        control = new Controller(this);
         shop = new ShopFragment();
         upgrades = new UpgradesFragment();
         option = new OptionsFragment();
-        control = new Controller(this);
 
         option.setInfo(control, this);
         upgrades.setControl(control);
