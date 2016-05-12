@@ -1,6 +1,7 @@
 package menu.catz.aaron.catzmain;
 
 import android.app.FragmentManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -16,6 +17,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import menu.catz.aaron.fragments.*;
@@ -65,10 +67,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         //instntiate fragments
+        control = new Controller(this);
         shop = new ShopFragment();
         upgrades = new UpgradesFragment();
         option = new OptionsFragment();
-        control = new Controller(this);
 
         option.setInfo(control, this);
         upgrades.setControl(control);
@@ -190,6 +192,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     public void render() {
         mMap.clear();
+        CircleOptions circly = new CircleOptions();
+        circly.center(control.player.pos);
+        circly.radius(control.player.View);
+        circly.fillColor(Color.argb(12, 0,0,0));
+        mMap.addCircle(circly);
         mMap.addMarker(new MarkerOptions().position(control.player.pos).title(String.valueOf(control.player.Health)+"/"+String.valueOf(control.player.maxHealth)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(control.player.pos));
         for (int i = 0; i < control.enemies.size(); i++) {
