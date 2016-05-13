@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         assert toolbar != null;
-        toolbar.setTitle("");
+        //toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
         //seting up Drawer
@@ -180,8 +180,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             @Override
                             public void runCommand() {
                                 render();
-                                upgrades.cashCheck();
-                                shop.cashCheck();
+                                try {
+                                    upgrades.cashCheck();
+                                    shop.cashCheck();
+                                } catch (Exception e) {
+
+                                }
+
                             }
                         }.start(MainActivity.this);
 
@@ -192,11 +197,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     public void render() {
         mMap.clear();
-        CircleOptions circly = new CircleOptions();
+        /*CircleOptions circly = new CircleOptions();
         circly.center(control.player.pos);
         circly.radius(control.player.View);
-        circly.fillColor(Color.argb(12, 0,0,0));
-        mMap.addCircle(circly);
+        circly.fillColor(Color.RED);
+        mMap.addCircle(circly);*/
+        mMap.addCircle(new CircleOptions().center(control.player.pos).radius(100000f));
         mMap.addMarker(new MarkerOptions().position(control.player.pos).title(String.valueOf(control.player.Health)+"/"+String.valueOf(control.player.maxHealth)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(control.player.pos));
         for (int i = 0; i < control.enemies.size(); i++) {
