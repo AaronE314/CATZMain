@@ -1,7 +1,10 @@
 package menu.catz.aaron.controller;
 
+import android.Manifest;
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.support.v4.app.ActivityCompat;
+
 import com.google.android.gms.maps.model.LatLng;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import menu.catz.aaron.catzmain.JSONLoader;
+import menu.catz.aaron.catzmain.MainActivity;
 import menu.catz.aaron.catzmain.R;
 
 public class Controller {
@@ -22,9 +26,9 @@ public class Controller {
     private ArrayList<JSONObject> enemydata;
     private Timer spawn, move;
 
-    public Controller(Context _CONTEXT) {
+    public Controller(Context _CONTEXT, MainActivity maps) {
         context = _CONTEXT;
-        player = new Player(context);
+        player = new Player(context, maps);
         enemies = new ArrayList<>();
         turrets = new ArrayList<>();
         enemydata = new ArrayList<>();
@@ -230,6 +234,7 @@ public class Controller {
             player.View+=1;
             costs.set(index,(int) Math.round(costs.get(index)*1.25));
         }
+        player.circly.radius(player.distFrom());
         return costs.get(index);
     }
     public int plusDmg() {

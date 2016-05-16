@@ -18,6 +18,8 @@ import android.support.v4.app.ActivityCompat;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import menu.catz.aaron.catzmain.MainActivity;
+
 public class GPSTracker extends Service implements LocationListener {
 
     Context context;
@@ -31,9 +33,10 @@ public class GPSTracker extends Service implements LocationListener {
     private static long MIN_TIME_BW_UPDATES = 5000;
     protected LocationManager locationManager;
 
-    GPSTracker(Context _CONTEXT, Player _PLAYER) {
+    GPSTracker(Context _CONTEXT, Player _PLAYER, MainActivity maps) {
         player = _PLAYER;
         context = _CONTEXT;
+        ActivityCompat.requestPermissions(maps,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},1);
         location = getLocation();
         if (location!=null)
         pos = new LatLng(location.getLatitude(), location.getLongitude());
@@ -47,8 +50,9 @@ public class GPSTracker extends Service implements LocationListener {
                 canGetLocation = true;
                 if (isNetworkEnabled) {
                     if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                    //Do request
                     }
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
                     if (locationManager != null) {
                         location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                     }
@@ -130,4 +134,3 @@ public class GPSTracker extends Service implements LocationListener {
         return null;
     }
 }
-

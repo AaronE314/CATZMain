@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "609866424329",
+    "project_id": "titanium-bus-127214"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609866424329:android:f554d51335c07282",
+        "android_client_info": {
+          "package_name": "menu.catz.aaron.catzmain"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "609866424329-20g24e9mj59rinbehtpf66t3borcmedc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "menu.catz.aaron.catzmain",
+            "certificate_hash": "708E548E2EF4855CAA19CE7CE25B0FE353EEFEA8"
+          }
+        },
+        {
+          "client_id": "609866424329-mcks2fij2m9e40dmcabsla26vrjal46i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAT-zDa4-orriGT9io41n-E7a_JDXq5Z7E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
