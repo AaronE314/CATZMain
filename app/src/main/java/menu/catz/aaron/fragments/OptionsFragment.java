@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.system.ErrnoException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 import com.google.android.gms.maps.GoogleMap;
 
+import menu.catz.aaron.catzmain.JSONLoader;
 import menu.catz.aaron.catzmain.MainActivity;
 import menu.catz.aaron.catzmain.R;
 import menu.catz.aaron.controller.Controller;
@@ -24,6 +27,7 @@ public class OptionsFragment extends Fragment {
     private String sSelectedMock, sSelectedMap;
     private Spinner spMapType,spMock;
     private CheckBox cbMock;
+    MainActivity mainActivity = new MainActivity();
     //Creates the view of the fragment from the proper XML file in layout
     @Nullable
     @Override
@@ -45,8 +49,8 @@ public class OptionsFragment extends Fragment {
         spMapType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-
                 sSelectedMap = spMapType.getSelectedItem().toString();
+                ChangeMapType();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
@@ -70,5 +74,28 @@ public class OptionsFragment extends Fragment {
     public void setInfo (Controller _CONTROL,Context _CONTEXT) {
         context = _CONTEXT;
         control = _CONTROL;
+    }
+
+    public void ChangeMapType(){
+        switch (sSelectedMap) {
+            case "Hybrid":
+                //return GoogleMap.MAP_TYPE_HYBRID;
+                //JSONLoader.parseStringToFile(context, "MapType.json", String.valueOf(GoogleMap.MAP_TYPE_HYBRID));
+            case "Terrain":
+                //return GoogleMap.MAP_TYPE_TERRAIN;
+                //JSONLoader.parseStringToFile(context, "MapType.json", String.valueOf(GoogleMap.MAP_TYPE_TERRAIN));
+            case "None":
+                //return GoogleMap.MAP_TYPE_NONE;
+                //JSONLoader.parseStringToFile(context, "MapType.json", String.valueOf(GoogleMap.MAP_TYPE_NONE));
+            case "Normal":
+                //return GoogleMap.MAP_TYPE_NORMAL;
+                //JSONLoader.parseStringToFile(context, "MapType.json", String.valueOf(GoogleMap.MAP_TYPE_NORMAL));
+            case "Satellite":
+                //return GoogleMap.MAP_TYPE_SATELLITE;
+                //JSONLoader.parseStringToFile(context, "MapType.json", String.valueOf(GoogleMap.MAP_TYPE_SATELLITE));
+            default:
+                //return GoogleMap.MAP_TYPE_NORMAL;
+                //JSONLoader.parseStringToFile(context, "MapType.json", String.valueOf(GoogleMap.MAP_TYPE_NORMAL));
+        }
     }
 }

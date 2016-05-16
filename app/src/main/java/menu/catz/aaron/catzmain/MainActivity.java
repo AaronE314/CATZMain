@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private OptionsFragment option;
     private UpgradesFragment upgrades;
     public Toolbar toolbar;
+    private android.support.v4.app.FragmentManager sFm;
 
 
     @Override
@@ -114,8 +115,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         //Step 1: Create a new Fragment manager for switching fragments
         FragmentManager fm = getFragmentManager();
+
         //Step 2: Create a new Support Fragment Manager
-        android.support.v4.app.FragmentManager sFm = getSupportFragmentManager();
+        sFm = getSupportFragmentManager();
 
         //Get id of item selected
         int id = item.getItemId();
@@ -166,26 +168,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        mMap.addMarker(new MarkerOptions().position(control.player.pos).title(String.valueOf(control.player.Health)+"/"+String.valueOf(control.player.maxHealth)));
-        new Thread(){
-            @Override
-            public void run() {
-                PseudoTimer pT = new PseudoTimer();
-                while(true){
-                    pT.Update();
-                    if(pT.frameReady(30f)){
-                        new PseudoTimer().new UIThreadCommand(){
-                            @Override
-                            public void runCommand() {
-                                render();
-                                try {
-                                    upgrades.cashCheck();
-                                    shop.cashCheck();
-                                } catch (Exception e) {
+        int sSelectedMap = GoogleMap.MAP_TYPE_HYBRID;
+                                mMap = googleMap;
+                                mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                                mMap.addMarker(new MarkerOptions().position(control.player.pos).title(String.valueOf(control.player.Health)+"/"+String.valueOf(control.player.maxHealth)));
+                                new Thread(){
+                                    @Override
+                                    public void run() {
+                                        PseudoTimer pT = new PseudoTimer();
+                                        while(true){
+                                            pT.Update();
+                                            if(pT.frameReady(30f)){
+                                                new PseudoTimer().new UIThreadCommand(){
+                                                    @Override
+                                                    public void runCommand() {
+                                                        render();
+                                                        try {
+                                                            upgrades.cashCheck();
+                                                            shop.cashCheck();
+                                                        } catch (Exception e) {
 
-                                }
+                                                        }
 
                             }
                         }.start(MainActivity.this);
@@ -207,5 +210,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mMap.addMarker(new MarkerOptions().position(control.turrets.get(i).pos).title(control.turrets.get(i).Name));
         }
     }
+
+
 
 }

@@ -13,11 +13,43 @@
       },
       "oauth_client": [
         {
-          "client_id": "609866424329-20g24e9mj59rinbehtpf66t3borcmedc.apps.googleusercontent.com",
+          "client_id": "609866424329-i4tvqkqjea18vjo76d8qnbg3u0kcvfuv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "menu.catz.aaron.catzmain",
+            "certificate_hash": "EFE9E012BDEA28C14FE0A839FE2824BBE670E67C"
+          }
+        },
+        {
+          "client_id": "609866424329-bun13d3jpl2qam35p6ma34sj0blscb3t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "menu.catz.aaron.catzmain",
+            "certificate_hash": "1B42F628A998E6FE5CF2EB5709847AD7429A3642"
+          }
+        },
+        {
+          "client_id": "609866424329-jcbl7v8iiatgagubkvjab2lbl7q50ojv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "menu.catz.aaron.catzmain",
+            "certificate_hash": "D4BD5920CD4F624079CF1641DF6075CDC52347A2"
+          }
+        },
+        {
+          "client_id": "609866424329-j40lm7ff1laav83hifgnp5pjtbbesbr6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "menu.catz.aaron.catzmain",
             "certificate_hash": "708E548E2EF4855CAA19CE7CE25B0FE353EEFEA8"
+          }
+        },
+        {
+          "client_id": "609866424329-15idb71gqo6bh3eoi8ca2g0gfs1926ms.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "menu.catz.aaron.catzmain",
+            "certificate_hash": "B3080CD44B300D291D0EAA7D2A9E1502836F6B11"
           }
         },
         {
