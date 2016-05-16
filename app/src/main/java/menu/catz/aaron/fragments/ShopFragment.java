@@ -19,6 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import menu.catz.aaron.catzmain.JSONLoader;
@@ -118,12 +119,20 @@ public class ShopFragment extends Fragment {
             range.add(obj.getDouble("Range"));
             name.add(obj.getString("Name"));
             price.add(obj.getInt("Cost"));
+            try {
+                URL url = new URL(obj.getString("URL"));
+                img.add(BitmapFactory.decodeStream(url.openStream()));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             //img.add(getBitmapFromURL(obj.getString("URL")));
         }
     }
     private void updateInfo(int index) {
-        ivTurret.setImageResource(imageId.get(index));
-        //ivTurret.setImageBitmap(img.get(index));
+        //ivTurret.setImageResource(imageId.get(index));
+        ivTurret.setImageBitmap(img.get(index));
         txtName.setText(name.get(index));
         txtPrice.setText("$" + price.get(index));
         txtDes.setText("RoF: " + String.valueOf(RoF.get(index)) + "\n Damage: " + String.valueOf(damage.get(index)) + "\n Range: " + range.get(index));
