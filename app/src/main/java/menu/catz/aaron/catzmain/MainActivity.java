@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
-        //seting up Drawer
+        //setting up Drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         //drawer.setDrawerListener(toggle);
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
 
-        //instntiate fragments
+        //initiate fragments
         control = new Controller(this);
         shop = new ShopFragment();
         upgrades = new UpgradesFragment();
