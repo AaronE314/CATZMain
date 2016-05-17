@@ -24,6 +24,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import menu.catz.aaron.catzmain.JSONLoader;
 import menu.catz.aaron.catzmain.R;
+import menu.catz.aaron.controller.BitmapTask;
 import menu.catz.aaron.controller.Controller;
 
 public class ShopFragment extends Fragment {
@@ -37,6 +38,7 @@ public class ShopFragment extends Fragment {
     private int index = 0;
     private Controller control;
     private Context context;
+    private boolean loaded = false;
 
     //Creates the view of the fragment from the proper XML file in layout
     @Nullable
@@ -121,18 +123,24 @@ public class ShopFragment extends Fragment {
             price.add(obj.getInt("Cost"));
             try {
                 URL url = new URL(obj.getString("URL"));
-                img.add(BitmapFactory.decodeStream(url.openStream()));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-            //img.add(getBitmapFromURL(obj.getString("URL")));
+            control.bitty.setOnLoadCallback(new BitmapTask().new OnLoadCallback(){
+                @Override
+                public void onLoad(Bitmap bitmap) {
+                    img.add(bitmap);
+                    loaded = true;
+                }
+            });
+            control.bitty.loadBitmap("Your Url Here");
         }
     }
     private void updateInfo(int index) {
         //ivTurret.setImageResource(imageId.get(index));
-        ivTurret.setImageBitmap(img.get(index));
+        if (loaded == true) {
+            ivTurret.setImageBitmap(img.get(index));
+        }
         txtName.setText(name.get(index));
         txtPrice.setText("$" + price.get(index));
         txtDes.setText("RoF: " + String.valueOf(RoF.get(index)) + "\n Damage: " + String.valueOf(damage.get(index)) + "\n Range: " + range.get(index));
@@ -141,19 +149,5 @@ public class ShopFragment extends Fragment {
     public void setInfo (Controller _CONTROL,Context _CONTEXT) {
         context = _CONTEXT;
         control = _CONTROL;
-    }
-    public static Bitmap getBitmapFromURL(String src) {
-        try {
-            URL url = new URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 }

@@ -1,17 +1,18 @@
 package menu.catz.aaron.controller;
 
-import android.Manifest;
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.support.v4.app.ActivityCompat;
 
 import com.google.android.gms.maps.model.LatLng;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import menu.catz.aaron.catzmain.JSONLoader;
 import menu.catz.aaron.catzmain.MainActivity;
 import menu.catz.aaron.catzmain.R;
@@ -23,6 +24,7 @@ public class Controller {
     public ArrayList<Turret> turrets;
     public ArrayList<String> ids;
     public ArrayList<Integer> costs;
+    public BitmapTask bitty;
     private ArrayList<JSONObject> enemydata;
     private Timer spawn, move;
 
@@ -36,6 +38,7 @@ public class Controller {
         costs = new ArrayList<>();
         spawn = new Timer();
         move = new Timer();
+        bitty = new BitmapTask();
         loadUpgrades();
         loadEnemy();
         moveEnemy();
