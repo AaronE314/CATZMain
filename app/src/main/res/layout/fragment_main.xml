@@ -7,14 +7,23 @@
         android:layout_height="match_parent"
         android:layout_gravity="center">
 
-        <TextView
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Main Fragment"
-            android:id="@+id/textView2"
-            android:layout_gravity="center"
-            android:layout_centerVertical="true"
+            android:text="Load Game"
+            android:id="@+id/btnLoad"
+            android:layout_marginTop="76dp"
+            android:layout_below="@+id/btnNew"
             android:layout_centerHorizontal="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Game"
+            android:id="@+id/btnNew"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="142dp" />
     </RelativeLayout>
+
 </FrameLayout>

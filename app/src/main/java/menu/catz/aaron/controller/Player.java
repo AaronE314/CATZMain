@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import org.json.JSONObject;
+
 public class Player {
     GPSTracker gps;
     public LatLng pos;
