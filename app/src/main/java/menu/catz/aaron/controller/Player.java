@@ -6,7 +6,11 @@ import android.graphics.Color;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import menu.catz.aaron.catzmain.MainActivity;
+import menu.catz.aaron.catzmain.JSONLoader;
 
 public class Player {
     GPSTracker gps;
@@ -14,8 +18,13 @@ public class Player {
     public int Health=200, maxHealth=200, View = 2, Level = 1, cash = 1000, EXP=0, maxEXP=100;
     public CircleOptions circly;
     Context context;
-    Player (Context _CONTEXT, MainActivity maps) {
+    Player (Context _CONTEXT, MainActivity maps, Boolean newgame) {
         context = _CONTEXT;
+        if (newgame) {
+            newGame();
+        } else {
+
+        }
         pos = new LatLng(0,0);
         gps = new GPSTracker(context, this, maps);
         circly = new CircleOptions();
@@ -23,6 +32,20 @@ public class Player {
         circly.radius(distFrom());
         circly.strokeColor(Color.MAGENTA);
         updateLocation();
+    }
+    private void newGame() {
+        String json = JSONLoader.parseFileToString(context, "Player.json");
+        try {
+            JSONObject obj = new JSONObject(json);
+            Health = maxHealth = obj.getInt("Health");
+            cash = obj.getInt("Cash");
+            View = obj.getInt("View");
+            Level = obj.getInt("Level");
+            maxEXP = obj.getInt("EXP");
+            EXP = 0;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
     public void updateLocation() {
         if (gps.pos!=null)

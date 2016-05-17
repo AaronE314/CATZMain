@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private UpgradesFragment upgrades;
     public Toolbar toolbar;
     private android.support.v4.app.FragmentManager sFm;
+    private Boolean newgame = true;
 
 
     @Override
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         //instntiate fragments
-        control = new Controller(this, this);
+        control = new Controller(this, this, newgame);
         shop = new ShopFragment();
         upgrades = new UpgradesFragment();
         option = new OptionsFragment();

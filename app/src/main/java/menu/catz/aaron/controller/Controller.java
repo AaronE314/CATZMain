@@ -28,9 +28,9 @@ public class Controller {
     private ArrayList<JSONObject> enemydata;
     private Timer spawn, move;
 
-    public Controller(Context _CONTEXT, MainActivity maps) {
+    public Controller(Context _CONTEXT, MainActivity maps, Boolean newgame) {
         context = _CONTEXT;
-        player = new Player(context, maps);
+        player = new Player(context, maps, newgame);
         enemies = new ArrayList<>();
         turrets = new ArrayList<>();
         enemydata = new ArrayList<>();
