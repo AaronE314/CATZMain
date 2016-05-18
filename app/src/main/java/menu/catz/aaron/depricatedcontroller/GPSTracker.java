@@ -16,25 +16,25 @@ import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 
-public class GPSTracker extends Service implements LocationListener {
+@Deprecated public class GPSTracker extends Service implements LocationListener {
 
-    Context context;
-    private final Player player;
-    Boolean isGPSEnables = false;
-    Boolean isNetworkEnabled = false;
-    Boolean canGetLocation = false;
-    Location location;
-    private static long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0;
-    private static long MIN_TIME_BW_UPDATES = 5000;
-    protected LocationManager locationManager;
+    @Deprecated Context context;
+    @Deprecated private final Player player;
+    @Deprecated Boolean isGPSEnables = false;
+    @Deprecated Boolean isNetworkEnabled = false;
+    @Deprecated Boolean canGetLocation = false;
+    @Deprecated Location location;
+    @Deprecated private static long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0;
+    @Deprecated private static long MIN_TIME_BW_UPDATES = 5000;
+    @Deprecated protected LocationManager locationManager;
 
-    GPSTracker(Context _CONTEXT, Player _PLAYER) {
+    @Deprecated GPSTracker(Context _CONTEXT, Player _PLAYER) {
         context = _CONTEXT;
         player = _PLAYER;
         getLocation();
         player.updateLocation();
     }
-    public Location getLocation() {
+    @Deprecated public Location getLocation() {
         try {
             locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
             isGPSEnables = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -63,7 +63,7 @@ public class GPSTracker extends Service implements LocationListener {
         }
         return location;
     }
-    public void stopUsingGPS() {
+    @Deprecated public void stopUsingGPS() {
         if (locationManager != null) {
             if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 locationManager.removeUpdates(GPSTracker.this);
@@ -71,10 +71,10 @@ public class GPSTracker extends Service implements LocationListener {
 
         }
     }
-    public boolean canGetLocation() {
+    @Deprecated public boolean canGetLocation() {
         return this.canGetLocation;
     }
-    public void showSettingsAlert() {
+    @Deprecated public void showSettingsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
         alertDialog.setTitle("GPS is settings");
         alertDialog.setMessage("NO GPS. WANT GO SETTING?");
@@ -94,7 +94,7 @@ public class GPSTracker extends Service implements LocationListener {
         alertDialog.show();
     }
     @Override
-    public void onLocationChanged(Location location) {
+    @Deprecated public void onLocationChanged(Location location) {
         if (isNetworkEnabled) {
             if (locationManager != null) {
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -111,17 +111,17 @@ public class GPSTracker extends Service implements LocationListener {
         player.updateLocation();
     }
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
+    @Deprecated public void onStatusChanged(String provider, int status, Bundle extras) {
     }
     @Override
-    public void onProviderEnabled(String provider) {
+    @Deprecated public void onProviderEnabled(String provider) {
     }
     @Override
-    public void onProviderDisabled(String provider) {
+    @Deprecated public void onProviderDisabled(String provider) {
     }
     @Nullable
     @Override
-    public IBinder onBind(Intent intent) {
+    @Deprecated public IBinder onBind(Intent intent) {
         return null;
     }
 }

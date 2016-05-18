@@ -9,25 +9,25 @@ import java.io.FileReader;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Zombie {
-    Controller control;
-    public LatLng pos;
-    public int Health, maxHealth, Damage, Defence, Atck, Def, Money, EXP;
-    private double Lat, Long, spdLat, spdLong;
-    double spdMax= 1;
+@Deprecated public class Zombie {
+    @Deprecated Controller control;
+    @Deprecated public LatLng pos;
+    @Deprecated public int Health, maxHealth, Damage, Defence, Atck, Def, Money, EXP;
+    @Deprecated private double Lat, Long, spdLat, spdLong;
+    @Deprecated double spdMax= 1;
 
-    Zombie(Controller _CONTROL, String _TYPE) {
+    @Deprecated  Zombie(Controller _CONTROL, String _TYPE) {
         control = _CONTROL;
         try {zombieLoad(_TYPE);}
         catch (FileNotFoundException e) {e.printStackTrace();}
         catch (JSONException e) {e.printStackTrace();}
         startPos();
     }
-    public void getAttacked (int _DAMAGE) {
+    @Deprecated public void getAttacked (int _DAMAGE) {
         defend(_DAMAGE);
         Health -= Def;
     }
-    public void move () {
+    @Deprecated public void move () {
         getSpdLat();
         getSpdLong();
         Lat = pos.latitude;
@@ -51,19 +51,19 @@ public class Zombie {
         }
         pos = new LatLng(Lat, Long);
     }
-    private void getSpdLat (){
+    @Deprecated private void getSpdLat (){
         spdLat = Math.abs(spdMax * Math.cos(Math.atan(((Lat - control.player.pos.latitude)/(Long - control.player.pos.longitude)))));
     }
-    private void getSpdLong (){
+    @Deprecated private void getSpdLong (){
         spdLong = Math.abs(spdMax * Math.sin(Math.atan((Lat - control.player.pos.latitude)/(Long - control.player.pos.longitude))));
     }
-    private void attack (int _DEFENCE) {
+    @Deprecated private void attack (int _DEFENCE) {
         Atck = (Damage / _DEFENCE) * 10;
     }
-    private void defend (int _DAMAGE) {
+    @Deprecated private void defend (int _DAMAGE) {
         Def = (_DAMAGE / Defence) * 10;
     }
-    private void startPos() {
+    @Deprecated private void startPos() {
         Random ran = new Random();
         Double angle = ran.nextDouble()*90;
         int quad = ran.nextInt(4);
@@ -84,7 +84,7 @@ public class Zombie {
         }
         pos = new LatLng(Lat, Long);
     }
-    private void zombieLoad(String _TYPE) throws FileNotFoundException, JSONException {
+    @Deprecated private void zombieLoad(String _TYPE) throws FileNotFoundException, JSONException {
         String jsonString = "";
         Scanner fin = new Scanner(new FileReader("Enemy.json"));
         while (fin.hasNextLine()) {

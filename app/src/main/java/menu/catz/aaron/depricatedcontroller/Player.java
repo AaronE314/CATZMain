@@ -4,21 +4,21 @@ import android.content.Context;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public class Player {
-    Controller control;
-    Context context;
-    public LatLng pos;
-    public int maxHealth, Health, Damage, Defence, Money, EXP, Level, EXPLevel;
-    double radius;
-    GPSTracker gps;
+@Deprecated public class Player {
+    @Deprecated Controller control;
+    @Deprecated Context context;
+    @Deprecated public LatLng pos;
+    @Deprecated  public int maxHealth, Health, Damage, Defence, Money, EXP, Level, EXPLevel;
+    @Deprecated double radius;
+    @Deprecated GPSTracker gps;
 
-    Player (Context _CONTEXT, Controller _CONTROL) {
+    @Deprecated Player (Context _CONTEXT, Controller _CONTROL) {
         control = _CONTROL;
         context = _CONTEXT;
         gps = new GPSTracker(context, this);
         //render();
     }
-    private void lvlUp() {
+    @Deprecated private void lvlUp() {
         maxHealth*=1.15;
         Health = maxHealth;
         EXP-=EXPLevel;
@@ -27,12 +27,12 @@ public class Player {
         Defence*=1.05;
         Level++;
     }
-    public void checkLevel () {
+    @Deprecated public void checkLevel () {
         if (EXP >= EXPLevel) {
             lvlUp();
         }
     }
-    public void updateLocation(){
+    @Deprecated public void updateLocation(){
         pos = new LatLng(/*gps.location.getLatitude(), gps.location.getLongitude()*/1,1);
     }
     /*private void render() {

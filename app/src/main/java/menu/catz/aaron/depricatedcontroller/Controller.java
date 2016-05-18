@@ -7,16 +7,16 @@ import com.google.android.gms.maps.GoogleMap;
 import java.util.ArrayList;
 import java.util.Timer;
 
-public class Controller {
+@Deprecated public class Controller {
 
-    Context context;
-    public Player player;
-    public ArrayList<Zombie> zombies;
-    ArrayList<Turret> turrets;
-    private Timer Update;
-    private Timer Spawn;
-    GoogleMap mMap;
-
+    @Deprecated Context context;
+    @Deprecated public Player player;
+    @Deprecated public ArrayList<Zombie> zombies;
+    @Deprecated ArrayList<Turret> turrets;
+    @Deprecated private Timer Update;
+    @Deprecated private Timer Spawn;
+    @Deprecated GoogleMap mMap;
+    @Deprecated
     public Controller(Context _CONTEXT, GoogleMap _MAP) {
         mMap = _MAP;
         context = _CONTEXT;
@@ -38,15 +38,15 @@ public class Controller {
             }
         }, 0, 1);*/
     }
-    public void newEnemy (String _TYPE) {
+    @Deprecated public void newEnemy (String _TYPE) {
         zombies.add(new Zombie(this, _TYPE));
         //render();
     }
-    public void newTurret (String _TYPE) {
+    @Deprecated public void newTurret (String _TYPE) {
         turrets.add(new Turret(this, _TYPE));
         //render();
     }
-    public void killCheck (int _ZOMBIE) {
+    @Deprecated public void killCheck (int _ZOMBIE) {
             if (zombies.get(_ZOMBIE).Health <= 0) {
                 player.Money+=zombies.get(_ZOMBIE).Money;
                 player.EXP+=zombies.get(_ZOMBIE).EXP;
@@ -54,11 +54,11 @@ public class Controller {
                 zombies.remove(_ZOMBIE);
             }
         }
-    private void update() {
+    @Deprecated private void update() {
         zombieWalk();
         //render();
     }
-    private void zombieWalk(){
+    @Deprecated private void zombieWalk(){
         for (int i = 0; i < zombies.size(); i++) {
             zombies.get(i).move();
         }

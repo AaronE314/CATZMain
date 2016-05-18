@@ -10,15 +10,15 @@ import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Turret {
-    Controller control;
-    LatLng pos;
-    int Damage;
-    double Range, RoF;
-    private Timer Fire;
-    String Name;
+@Deprecated public class Turret {
+    @Deprecated Controller control;
+    @Deprecated LatLng pos;
+    @Deprecated int Damage;
+    @Deprecated double Range, RoF;
+    @Deprecated private Timer Fire;
+    @Deprecated String Name;
 
-    Turret (Controller _CONTROL, String _TYPE) {
+    @Deprecated Turret (Controller _CONTROL, String _TYPE) {
         control = _CONTROL;
         try {turretLoad(_TYPE);}
         catch (FileNotFoundException e) {e.printStackTrace();}
@@ -32,7 +32,7 @@ public class Turret {
             }
         }, 0, Math.round((1000/RoF)));
     }
-    public void attack() {
+    @Deprecated public void attack() {
         int target = -1;
         double tdis = -1, dis;
         for (int i = 0; i < control.zombies.size(); i++) {
@@ -47,8 +47,8 @@ public class Turret {
             control.killCheck(target);
         }
     }
-    private void startPos () { pos = new LatLng(control.player.pos.latitude, control.player.pos.longitude); }
-    private void turretLoad(String _TYPE) throws FileNotFoundException, JSONException {
+    @Deprecated private void startPos () { pos = new LatLng(control.player.pos.latitude, control.player.pos.longitude); }
+    @Deprecated private void turretLoad(String _TYPE) throws FileNotFoundException, JSONException {
         String jsonString = "";
         Scanner fin = new Scanner(new FileReader("Turrets.json"));
         while (fin.hasNextLine()) {

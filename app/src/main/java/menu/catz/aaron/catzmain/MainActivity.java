@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private UpgradesFragment upgrades;
     public Toolbar toolbar;
     private android.support.v4.app.FragmentManager sFm;
+    private Boolean newgame = true;
 
 
     @Override
@@ -200,12 +201,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     public void render() {
         mMap.clear();
-        /*CircleOptions circly = new CircleOptions();
-        circly.center(control.player.pos);
-        circly.radius(control.player.View);
-        circly.fillColor(Color.RED);
-        mMap.addCircle(circly);*/
-        mMap.addCircle(new CircleOptions().center(control.player.pos).radius(100000f));
+        mMap.addCircle(control.player.circly);
         mMap.addMarker(new MarkerOptions().position(control.player.pos).title(String.valueOf(control.player.Health)+"/"+String.valueOf(control.player.maxHealth)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(control.player.pos));
         for (int i = 0; i < control.enemies.size(); i++) {
