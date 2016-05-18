@@ -31,7 +31,7 @@ public class ShopFragment extends Fragment {
 
     private ArrayList<Integer> imageId, price, damage;
     private ArrayList<Double> RoF, range;
-    private ArrayList<String> name;
+    private ArrayList<String> name, urls;
     private ArrayList<Bitmap> img;
     private ImageView ivTurret;
     private TextView txtName,txtPrice, txtDes, txtCash;
@@ -61,6 +61,7 @@ public class ShopFragment extends Fragment {
         range = new ArrayList<>();
         name = new ArrayList<>();
         img = new ArrayList<>();
+        urls = new ArrayList<>();
         imageId.add(R.drawable.map_icon);
         imageId.add(R.drawable.options_icon);
         imageId.add(R.drawable.shop_icon);
@@ -98,7 +99,7 @@ public class ShopFragment extends Fragment {
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                control.newTurret(name.get(index), damage.get(index), range.get(index), price.get(index), RoF.get(index));
+                control.newTurret(name.get(index), damage.get(index), range.get(index), price.get(index), RoF.get(index), urls.get(index));
                 txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
             }
         });
@@ -111,6 +112,7 @@ public class ShopFragment extends Fragment {
     }
 
     private void load() throws FileNotFoundException, JSONException {
+        String url = "";
         String jsonString = JSONLoader.parseFileToString(context, "Turrets.json");
         JSONObject obj = new JSONObject(jsonString);
         JSONArray turrets = obj.getJSONArray("Turrets");
@@ -121,11 +123,8 @@ public class ShopFragment extends Fragment {
             range.add(obj.getDouble("Range"));
             name.add(obj.getString("Name"));
             price.add(obj.getInt("Cost"));
-            try {
-                URL url = new URL(obj.getString("URL"));
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+            url = obj.getString("URL");
+            urls.add(url);
             control.bitty.setOnLoadCallback(new BitmapTask().new OnLoadCallback(){
                 @Override
                 public void onLoad(Bitmap bitmap) {
@@ -133,7 +132,7 @@ public class ShopFragment extends Fragment {
                     loaded = true;
                 }
             });
-            control.bitty.loadBitmap("Your Url Here");
+            control.bitty.loadBitmap(url);
         }
     }
     private void updateInfo(int index) {

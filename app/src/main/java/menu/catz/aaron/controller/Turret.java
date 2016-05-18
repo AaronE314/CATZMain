@@ -6,16 +6,17 @@ import java.util.Timer;
 
 public class Turret {
     public LatLng pos;
-    public String Name;
+    public String Name, url;
     public Timer Fire;
     public int Dmg, kills = 0, maxKills = 10;
     public double RoF, Range;
-    public Turret (LatLng _POS, String _NAME, int _DAMAGE, double _RANGE, double _RoF) {
+    public Turret (LatLng _POS, String _NAME, int _DAMAGE, double _RANGE, double _RoF, String _URL) {
         pos = _POS;
         Name = _NAME;
         Dmg = _DAMAGE;
         RoF = _RoF;
         Range = _RANGE;
+        url = _URL;
         Fire = new Timer();
     }
     public void lvlCheck() {
