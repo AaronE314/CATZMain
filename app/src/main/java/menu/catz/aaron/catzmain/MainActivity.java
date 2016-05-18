@@ -40,10 +40,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ShopFragment shop;
     private OptionsFragment option;
     private UpgradesFragment upgrades;
-    public Toolbar toolbar;
+    private Toolbar toolbar;
     private android.support.v4.app.FragmentManager sFm;
     private Boolean newgame = true;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +53,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         assert toolbar != null;
-        //toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
-        //seting up Drawer
+        //Grab new Game from Starting Activity
+        Bundle getBasket = getIntent().getExtras();
+        newgame = getBasket.getBoolean("NewGame");
+        System.out.println("New Game = " + newgame);
+
+
+        //setting up Drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         //drawer.setDrawerListener(toggle);
@@ -68,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
 
-        //instntiate fragments
+        //instantiate fragments
         control = new Controller(this, this, newgame);
         shop = new ShopFragment();
         upgrades = new UpgradesFragment();
@@ -77,11 +81,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         option.setInfo(control, this);
         upgrades.setControl(control);
         //set default fragment
-        FragmentManager fm = getFragmentManager();
-        fm.beginTransaction().replace(R.id.content_frame, new MainFragment()).commit();
+        //FragmentManager fm = getFragmentManager();
 
         //set location of on map ready function
         supportMapFragment.getMapAsync(this);
+
+        sFm = getSupportFragmentManager();
+        sFm.beginTransaction().add(R.id.map, supportMapFragment).commit();
+        //fm.beginTransaction().replace(R.id.content_frame, new MainFragment()).commit();
     }
 
     @Override
@@ -124,15 +131,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         //hide Support map fragment if it's added, if you don't hide it, the map will always be showing
-        if(supportMapFragment.isAdded()) {
+        if (supportMapFragment.isAdded()) {
             sFm.beginTransaction().hide(supportMapFragment).commit();
         }
 
         //replaces the Content_frame FrameLayout in Content_main (in layout) with the fragment clicked
-        switch (id){
+        switch (id) {
             case R.id.nav_map:
                 //Checking if map is added
-                if(!supportMapFragment.isAdded()){
+                if (!supportMapFragment.isAdded()) {
                     //add map if its not added
                     sFm.beginTransaction().add(R.id.map, supportMapFragment).commit();
                 } else {
@@ -170,26 +177,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onMapReady(GoogleMap googleMap) {
         int sSelectedMap = GoogleMap.MAP_TYPE_HYBRID;
-                                mMap = googleMap;
-                                mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-                                mMap.addMarker(new MarkerOptions().position(control.player.pos).title(String.valueOf(control.player.Health)+"/"+String.valueOf(control.player.maxHealth)));
-                                new Thread(){
-                                    @Override
-                                    public void run() {
-                                        PseudoTimer pT = new PseudoTimer();
-                                        while(true){
-                                            pT.Update();
-                                            if(pT.frameReady(30f)){
-                                                new PseudoTimer().new UIThreadCommand(){
-                                                    @Override
-                                                    public void runCommand() {
-                                                        render();
-                                                        try {
-                                                            upgrades.cashCheck();
-                                                            shop.cashCheck();
-                                                        } catch (Exception e) {
+        mMap = googleMap;
+        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        mMap.addMarker(new MarkerOptions().position(control.player.pos).title(String.valueOf(control.player.Health) + "/" + String.valueOf(control.player.maxHealth)));
+        new Thread() {
+            @Override
+            public void run() {
+                PseudoTimer pT = new PseudoTimer();
+                while (true) {
+                    pT.Update();
+                    if (pT.frameReady(30f)) {
+                        new PseudoTimer().new UIThreadCommand() {
+                            @Override
+                            public void runCommand() {
+                                render();
+                                try {
+                                    upgrades.cashCheck();
+                                    shop.cashCheck();
+                                } catch (Exception e) {
 
-                                                        }
+                                }
 
                             }
                         }.start(MainActivity.this);
@@ -199,19 +206,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }.start();
     }
+
     public void render() {
         mMap.clear();
-        mMap.addCircle(control.player.circly);
-        mMap.addMarker(new MarkerOptions().position(control.player.pos).title(String.valueOf(control.player.Health)+"/"+String.valueOf(control.player.maxHealth)));
+        /*CircleOptions circly = new CircleOptions();
+        circly.center(control.player.pos);
+        circly.radius(control.player.View);
+        circly.fillColor(Color.RED);
+        mMap.addCircle(circly);*/
+        mMap.addCircle(new CircleOptions().center(control.player.pos).radius(100000f));
+        mMap.addMarker(new MarkerOptions().position(control.player.pos).title(String.valueOf(control.player.Health) + "/" + String.valueOf(control.player.maxHealth)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(control.player.pos));
         for (int i = 0; i < control.enemies.size(); i++) {
-            mMap.addMarker(new MarkerOptions().position(control.enemies.get(i).pos).title(String.valueOf(control.enemies.get(i).Health)+"/"+String.valueOf(control.enemies.get(i).maxHealth)));
+            mMap.addMarker(new MarkerOptions().position(control.enemies.get(i).pos).title(String.valueOf(control.enemies.get(i).Health) + "/" + String.valueOf(control.enemies.get(i).maxHealth)));
         }
         for (int i = 0; i < control.turrets.size(); i++) {
             mMap.addMarker(new MarkerOptions().position(control.turrets.get(i).pos).title(control.turrets.get(i).Name));
         }
     }
-
 
 
 }

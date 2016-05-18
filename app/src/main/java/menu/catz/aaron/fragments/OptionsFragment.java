@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -24,18 +25,21 @@ import menu.catz.aaron.controller.Controller;
 public class OptionsFragment extends Fragment {
     Controller control;
     Context context;
-    private String sSelectedMock, sSelectedMap;
-    private Spinner spMapType,spMock;
-    private CheckBox cbMock;
     MainActivity mainActivity = new MainActivity();
+    private String sSelectedMock, sSelectedMap;
+    private Spinner spMapType, spMock;
+    private CheckBox cbMock;
+    private Button btnSave;
+
     //Creates the view of the fragment from the proper XML file in layout
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_options, container,false);
+        View rootView = inflater.inflate(R.layout.fragment_options, container, false);
 
         cbMock = (CheckBox) rootView.findViewById(R.id.cbMock);
+        btnSave = (Button) rootView.findViewById(R.id.btnSave);
 
         spMapType = (Spinner) rootView.findViewById(R.id.spMapType);
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(context, R.array.MapType_array, android.R.layout.simple_spinner_item);
@@ -46,12 +50,20 @@ public class OptionsFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spMock.setAdapter(adapter);
 
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO control.Save();
+            }
+        });
+
         spMapType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 sSelectedMap = spMapType.getSelectedItem().toString();
-                ChangeMapType();
+                //TODO Save Setting to cloud
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
@@ -59,10 +71,14 @@ public class OptionsFragment extends Fragment {
         spMock.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if(cbMock.isChecked()) {
+                if (cbMock.isChecked()) {
                     sSelectedMock = spMock.getSelectedItem().toString();
-                } else { sSelectedMock = null; }
+                } else {
+                    sSelectedMock = null;
+                }
+                //TODO Save Setting to cloud
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
@@ -71,31 +87,9 @@ public class OptionsFragment extends Fragment {
         return rootView;
 
     }
-    public void setInfo (Controller _CONTROL,Context _CONTEXT) {
+
+    public void setInfo(Controller _CONTROL, Context _CONTEXT) {
         context = _CONTEXT;
         control = _CONTROL;
-    }
-
-    public void ChangeMapType(){
-        switch (sSelectedMap) {
-            case "Hybrid":
-                //return GoogleMap.MAP_TYPE_HYBRID;
-                //JSONLoader.parseStringToFile(context, "MapType.json", String.valueOf(GoogleMap.MAP_TYPE_HYBRID));
-            case "Terrain":
-                //return GoogleMap.MAP_TYPE_TERRAIN;
-                //JSONLoader.parseStringToFile(context, "MapType.json", String.valueOf(GoogleMap.MAP_TYPE_TERRAIN));
-            case "None":
-                //return GoogleMap.MAP_TYPE_NONE;
-                //JSONLoader.parseStringToFile(context, "MapType.json", String.valueOf(GoogleMap.MAP_TYPE_NONE));
-            case "Normal":
-                //return GoogleMap.MAP_TYPE_NORMAL;
-                //JSONLoader.parseStringToFile(context, "MapType.json", String.valueOf(GoogleMap.MAP_TYPE_NORMAL));
-            case "Satellite":
-                //return GoogleMap.MAP_TYPE_SATELLITE;
-                //JSONLoader.parseStringToFile(context, "MapType.json", String.valueOf(GoogleMap.MAP_TYPE_SATELLITE));
-            default:
-                //return GoogleMap.MAP_TYPE_NORMAL;
-                //JSONLoader.parseStringToFile(context, "MapType.json", String.valueOf(GoogleMap.MAP_TYPE_NORMAL));
-        }
     }
 }
