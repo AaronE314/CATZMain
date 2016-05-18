@@ -34,7 +34,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyA3KQWs03CwhlAQmxyj-MFc0RPklgjBUhQ" />
 
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity"
+            android:label="@string/game_name"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

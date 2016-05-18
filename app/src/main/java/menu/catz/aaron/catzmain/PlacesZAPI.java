@@ -30,7 +30,7 @@ public class PlacesZAPI implements ZAPIClient.ZAPI{
             new Thread(){
                 @Override
                 public void run() {
-                    //if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+                    if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
                         PendingResult<PlaceLikelihoodBuffer> result = Places.PlaceDetectionApi.getCurrentPlace(client.getClient(), null);
                         result.setResultCallback(new ResultCallback<PlaceLikelihoodBuffer>() {
                             @Override
@@ -48,7 +48,7 @@ public class PlacesZAPI implements ZAPIClient.ZAPI{
                                 likelyPlaces.release();
                             }
                         });
-                    //}
+                    }
                 }
             }.start();
         }
