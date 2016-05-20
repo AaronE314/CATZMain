@@ -11,10 +11,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class FileHandler {
-    String filename = "PlayerData.json";
+    String filename = "";
     Context context;
-    FileHandler(Context c){
+    FileHandler(Context c, String name){
         context = c;
+        filename = name;
     }
     public void incrementLevel()  {
         writeToFile(String.valueOf(getLevel() + 1));
