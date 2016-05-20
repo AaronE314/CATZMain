@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private UpgradesFragment upgrades;
     private Toolbar toolbar;
     private android.support.v4.app.FragmentManager sFm;
-    private Boolean newgame = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +56,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //Grab new Game from Starting Activity
         Bundle getBasket = getIntent().getExtras();
-        newgame = getBasket.getBoolean("NewGame");
-        System.out.println("New Game = " + newgame);
+        Boolean newGame = getBasket.getBoolean("NewGame");
+        System.out.println("New Game = " + newGame);
 
 
         //setting up Drawer
@@ -73,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         //instantiate fragments
-        control = new Controller(this, this, newgame);
+        control = new Controller(this, this, newGame);
         shop = new ShopFragment();
         upgrades = new UpgradesFragment();
         option = new OptionsFragment();
