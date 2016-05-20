@@ -30,7 +30,7 @@ public class Controller {
 
     public Controller(Context _CONTEXT, MainActivity maps, Boolean newgame) {
         context = _CONTEXT;
-        player = new Player(context, maps, newgame);
+        player = new Player(context, maps);
         enemies = new ArrayList<>();
         turrets = new ArrayList<>();
         enemydata = new ArrayList<>();
@@ -39,15 +39,20 @@ public class Controller {
         spawn = new Timer();
         move = new Timer();
         bitty = new BitmapTask();
+        if (newgame) {
+            newGame();
+        } else {
+            loadGame();
+        }
         loadUpgrades();
         loadEnemy();
         moveEnemy();
         newEnemy();
     }
-    public void newTurret(String _NAME, int _DAMAGE, double _RANGE, int _PRICE, double _RoF) {
+    public void newTurret(String _NAME, int _DAMAGE, double _RANGE, int _PRICE, double _RoF, String _URL) {
         if (player.cash >= _PRICE) {
             player.cash -= _PRICE;
-            turrets.add(new Turret(player.pos, _NAME, _DAMAGE, _RANGE, _RoF));
+            turrets.add(new Turret(player.pos, _NAME, _DAMAGE, _RANGE, _RoF, _URL));
             scheduleTAttack();
         }
     }
@@ -314,6 +319,73 @@ public class Controller {
             player.cash-=cost;
             player.EXP+= (cost/player.Level);
             player.checkLevel();
+        }
+    }
+    private void newGame() {
+        String json = JSONLoader.parseFileToString(context, "Player.json");
+        try {
+            JSONObject obj = new JSONObject(json);
+            player.Health = player.maxHealth = obj.getInt("Health");
+            player.cash = obj.getInt("Cash");
+            player.View = obj.getInt("View");
+            player.Level = obj.getInt("Level");
+            player.maxEXP = obj.getInt("EXP");
+            player.EXP = 0;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    private void loadGame() {
+
+    }
+    private void Save() {
+        try {
+            JSONObject obj = new JSONObject("");
+            JSONObject players = new JSONObject("");
+            JSONArray Aturrets = new JSONArray();
+            JSONArray Aenemies = new JSONArray();
+            players.put("maxHealth", player.maxHealth);
+            players.put("Health", player.Health);
+            players.put("View", player.View);
+            players.put("Level", player.Level);
+            players.put("maxEXP", player.maxEXP);
+            players.put("EXP", player.EXP);
+            players.put("Cash", player.cash);
+            players.put("Lat", player.pos.latitude);
+            players.put("Long", player.pos.longitude);
+            for (int i = 0; i < enemies.size(); i++) {
+                JSONObject Oenemy = new JSONObject("");
+                Oenemy.put("atckSpeed", enemies.get(i).atckSpeed);
+                Oenemy.put("cash", enemies.get(i).cash);
+                Oenemy.put("dmg", enemies.get(i).dmg);
+                Oenemy.put("EXP", enemies.get(i).EXP);
+                Oenemy.put("Health", enemies.get(i).Health);
+                Oenemy.put("maxHealth", enemies.get(i).maxHealth);
+                Oenemy.put("lat", enemies.get(i).pos.latitude);
+                Oenemy.put("long", enemies.get(i).pos.longitude);
+                Oenemy.put("height", enemies.get(i).ground.getHeight());
+                Oenemy.put("width", enemies.get(i).ground.getWidth());
+                Oenemy.put("URL", enemies.get(i).URL);
+                Aenemies.put(Oenemy);
+            }
+            for (int i = 0; i < turrets.size(); i++) {
+                JSONObject Oturret = new JSONObject("");
+                Oturret.put("Dmg", turrets.get(i).Dmg);
+                Oturret.put("kills", turrets.get(i).kills);
+                Oturret.put("maxKills", turrets.get(i).maxKills);
+                Oturret.put("Name", turrets.get(i).Name);
+                Oturret.put("long", turrets.get(i).pos.longitude);
+                Oturret.put("lat", turrets.get(i).pos.latitude);
+                Oturret.put("Range", turrets.get(i).Range);
+                Oturret.put("RoF", turrets.get(i).RoF);
+                Oturret.put("URL", turrets.get(i).url);
+                Aturrets.put(Oturret);
+            }
+            obj.put("Player", players);
+            obj.put("Enemies", Aenemies);
+            obj.put("Turrets", Aturrets);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 }

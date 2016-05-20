@@ -14,6 +14,7 @@ public class Enemy {
     private String name;
     private double speed;
     public Timer attack;
+    public String URL = "";
     GroundOverlayOptions ground;
     Enemy (LatLng _POS, JSONObject obj) {
         pos = _POS;
