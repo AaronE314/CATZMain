@@ -25,7 +25,6 @@ import menu.catz.aaron.controller.Controller;
 public class OptionsFragment extends Fragment {
     Controller control;
     Context context;
-    MainActivity mainActivity = new MainActivity();
     private String sSelectedMock, sSelectedMap;
     private Spinner spMapType, spMock;
     private CheckBox cbMock;

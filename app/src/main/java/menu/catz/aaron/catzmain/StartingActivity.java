@@ -22,6 +22,7 @@ public class StartingActivity extends AppCompatActivity {
         Button btnLoad = (Button) findViewById(R.id.btnLoad);
         Button btnNew = (Button) findViewById(R.id.btnNew);
 
+        //Learned passing data to other activities from Dina's MVC
         assert btnLoad != null;
         btnLoad.setOnClickListener(new View.OnClickListener() {
             @Override
