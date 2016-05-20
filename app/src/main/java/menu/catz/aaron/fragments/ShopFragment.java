@@ -77,7 +77,7 @@ public class ShopFragment extends Fragment {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(index<(imageId.size()-1)){
+                if(index<(name.size()-1)){
                     index+=1;
                 } else {
                     index = 0;
@@ -91,7 +91,7 @@ public class ShopFragment extends Fragment {
                 if(index>0){
                     index-=1;
                 } else {
-                    index=(imageId.size()-1);
+                    index=(name.size()-1);
                 }
                 updateInfo(index);
             }
@@ -116,7 +116,7 @@ public class ShopFragment extends Fragment {
         String jsonString = JSONLoader.parseFileToString(context, "Turrets.json");
         JSONObject obj = new JSONObject(jsonString);
         JSONArray turrets = obj.getJSONArray("Turrets");
-        for (int i = 0; i < turrets.length(); ++i) {
+        for (int i = 0; i < turrets.length(); i++) {
             obj = turrets.getJSONObject(i);
             damage.add(obj.getInt("Damage"));
             RoF.add(obj.getDouble("RoF"));
@@ -125,15 +125,20 @@ public class ShopFragment extends Fragment {
             price.add(obj.getInt("Cost"));
             url = obj.getString("URL");
             urls.add(url);
-            control.bitty.setOnLoadCallback(new BitmapTask().new OnLoadCallback(){
-                @Override
-                public void onLoad(Bitmap bitmap) {
-                    img.add(bitmap);
-                    loaded = true;
-                }
-            });
-            control.bitty.loadBitmap(url);
         }
+        control.bitty.setOnLoadCallback(new BitmapTask().new OnLoadCallback(){
+            @Override
+            public void onLoad(Bitmap bitmap) {
+                img.add(bitmap);
+                loaded = true;
+            }
+        });
+        for (int i = 0; i < urls.size(); i++) {
+            control.bitty.loadBitmap(urls.get(i));
+            while (!loaded) {}
+            loaded = false;
+        }
+        loaded = true;
     }
     private void updateInfo(int index) {
         //ivTurret.setImageResource(imageId.get(index));

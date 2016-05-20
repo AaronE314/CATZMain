@@ -13,25 +13,19 @@ import java.util.ArrayList;
 public class FileHandler {
     String filename = "";
     Context context;
-    FileHandler(Context c, String name){
+    public FileHandler(Context c, String name){
         context = c;
         filename = name;
     }
-    public void incrementLevel()  {
-        writeToFile(String.valueOf(getLevel() + 1));
-    }
-    public int getLevel(){
-        return Integer.valueOf(readFromFile().get(0));
-    }
 
-    private void writeToFile(String data) {
+    public void writeToFile(String data) {
         try {
             File file = new File(context.getFilesDir(),filename);
             if (!file.exists()) {
                 createFile();
             }
             FileWriter fOut = new FileWriter(file);
-            fOut.write(data);
+            fOut.append(data);
             fOut.close();
 
         }
@@ -55,7 +49,7 @@ public class FileHandler {
         try {
             File file = new File(context.getFilesDir(),filename);
             if (!file.exists()) {
-                writeToFile("0");
+                writeToFile("");
             }
             FileReader fIn = new FileReader(file);
             BufferedReader textReader = new BufferedReader(fIn);

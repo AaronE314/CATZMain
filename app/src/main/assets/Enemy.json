@@ -1,31 +1,34 @@
 {
   "Enemies": [
     {
-      "Name": "One",
+      "Name": "Zambie",
       "Health": "100",
       "Damage": "100",
       "Speed": "1.01",
       "EXP": "100",
       "Money": "100",
-      "AtckSpd": "1000"
+      "AtckSpd": "1000",
+      "URL": "http://rosasfreelancedesign.com/codepen/zombie-sprite.png"
     },
     {
-      "Name": "Two",
+      "Name": "Skeletor",
       "Health": "200",
       "Damage": "200",
       "Speed": "2.02",
       "EXP": "200",
       "Money": "200",
-      "AtckSpd": "2000"
+      "AtckSpd": "2000",
+      "URL": "http://vignette2.wikia.nocookie.net/dragonsdogmaquest/images/d/dd/Skeleton-sorcerer.jpg/revision/latest?cb=20140808082339"
     },
     {
-      "Name": "Three",
+      "Name": "Pancake",
       "Health": "300",
       "Damage": "300",
       "Speed": "3.03",
       "EXP": "300",
       "Money": "300",
-      "AtckSpd": "3000"
+      "AtckSpd": "3000",
+      "URL": "http://www.mrbreakfast.com/images/656_smile_pancake.jpg"
     }
   ]
 }

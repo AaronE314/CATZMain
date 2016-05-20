@@ -9,13 +9,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import menu.catz.aaron.catzmain.JSONLoader;
 import menu.catz.aaron.catzmain.MainActivity;
 import menu.catz.aaron.catzmain.R;
+import menu.catz.aaron.catzmain.FileHandler;
 
 public class Controller {
     public Context context;
@@ -27,9 +31,11 @@ public class Controller {
     public BitmapTask bitty;
     private ArrayList<JSONObject> enemydata;
     private Timer spawn, move;
+    DateFormat df;
 
     public Controller(Context _CONTEXT, MainActivity maps, Boolean newgame) {
         context = _CONTEXT;
+        df = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
         player = new Player(context, maps);
         enemies = new ArrayList<>();
         turrets = new ArrayList<>();
@@ -53,6 +59,7 @@ public class Controller {
         if (player.cash >= _PRICE) {
             player.cash -= _PRICE;
             turrets.add(new Turret(player.pos, _NAME, _DAMAGE, _RANGE, _RoF, _URL));
+            System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Creating New Turret With ID: " + (turrets.size()-1));
             scheduleTAttack();
         }
     }
@@ -85,6 +92,7 @@ public class Controller {
                 for (int y = 2; y < player.Level; y += 2) {
                     enemies.get(enemies.size() - 1).lvlUp();
                 }
+                System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Creating New Enemy With Id: " + (enemies.size()-1));
                 scheduleEAttack();
             }
             spawn.schedule(new TimerTask() {
@@ -105,6 +113,7 @@ public class Controller {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Enemy Data Loaded");
     }
     private void moveEnemy() {
         for (int i = 0; i < enemies.size(); i++) {
@@ -118,6 +127,7 @@ public class Controller {
         }, 50);
     }
     private void scheduleTAttack() {
+        System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Scheduled New Attack For Turret " + (turrets.size() - 1));
         turrets.get(turrets.size() - 1).Fire.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -137,11 +147,15 @@ public class Controller {
             }
         }
         if (turrets.get(index).Range > cdist && close != -1) {
-            MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.pewpew);
-            mPlayer.setVolume(100,100);
-            mPlayer.start();
-            enemies.get(close).Health -= turrets.get(index).Dmg;
-            killCheck(close, ind);
+            try {
+                MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.pewpew);
+                mPlayer.setVolume(100, 100);
+                mPlayer.start();
+                enemies.get(close).Health -= turrets.get(index).Dmg;
+                System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Turret " + index + " Attacked Enemy " + close + " For " + turrets.get(index).Dmg);
+                System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Enemy " + close + " Has " + enemies.get(close).Health + "Health");
+                killCheck(close, ind);
+            } catch (Exception e) {}
         }
         turrets.get(index).Fire.schedule(new TimerTask() {
             @Override
@@ -173,9 +187,12 @@ public class Controller {
             turrets.get(ind).kills++;
             turrets.get(ind).lvlCheck();
             player.checkLevel();
+            System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Enemy " + index + " Was Killed By Turret " + ind);
+            System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Turret " + ind + " Has " + turrets.get(ind).kills + " Kills");
         }
     }
     private void scheduleEAttack() {
+        System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Schedule Attack For Enemy " + (enemies.size()-1));
         enemies.get(enemies.size() - 1).attack.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -187,6 +204,8 @@ public class Controller {
         final int ind = index;
         if (enemies.get(index).pos.latitude == player.pos.latitude && enemies.get(index).pos.longitude == player.pos.longitude) {
             player.Health-= enemies.get(index).dmg;
+            System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Enemy " + index + " Has Attacked The Player");
+            System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Player Has " + player.Health + " Health");
             kill();
         }
             enemies.get(index).attack.schedule(new TimerTask() {
@@ -197,6 +216,7 @@ public class Controller {
         }, Math.round(enemies.get(ind).atckSpeed));
     }
     private void loadUpgrades() {
+        System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Upgrade Data Loaded");
         try {
             String jsonString = JSONLoader.parseFileToString(context, "Upgrades.json");
             JSONObject obj = new JSONObject(jsonString);
@@ -211,7 +231,7 @@ public class Controller {
     }
     private void kill() {
         if (player.Health <= 0) {
-            System.exit(69);
+            System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Player Has Died");
         }
     }
     public int plusHealth() {
@@ -226,6 +246,8 @@ public class Controller {
             player.cash-=costs.get(index);
             player.Health+=(player.maxHealth*0.20);
             costs.set(index,(int) Math.round(costs.get(index)*1.25));
+            System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Player Has " + player.Health + " Health");
+            System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Player Has " + player.cash + " Money");
         }
         return costs.get(index);
     }
@@ -241,6 +263,8 @@ public class Controller {
             player.cash-=costs.get(index);
             player.View+=1;
             costs.set(index,(int) Math.round(costs.get(index)*1.25));
+            System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Player Has " + player.View + " View");
+            System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Player Has " + player.cash + " Money");
         }
         player.circly.radius(player.distFrom());
         return costs.get(index);
@@ -257,8 +281,10 @@ public class Controller {
             player.cash-=costs.get(index);
             for (int i = 0; i < turrets.size(); i++) {
                 turrets.get(i).Dmg = (int) Math.round(turrets.get(i).Dmg*1.25);
+                System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Turrt " + i + " Deals " + turrets.get(i).Dmg + " Damage");
             }
             costs.set(index,(int) Math.round(costs.get(index)*1.25));
+            System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Player Has " + player.cash + " Money");
         }
         return costs.get(index);
     }
@@ -274,8 +300,10 @@ public class Controller {
             player.cash-=costs.get(index);
             for (int i = 0; i < turrets.size(); i++) {
                 turrets.get(i).Range += 0.5;
+                System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Turret " + i + " Has " + turrets.get(i).Range + " Range");
             }
             costs.set(index,(int) Math.round(costs.get(index)*1.25));
+            System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Player Has " + player.cash + " Money");
         }
         return costs.get(index);
     }
@@ -292,8 +320,11 @@ public class Controller {
             for (int i = 0; i < turrets.size(); i++) {
                 turrets.get(i).kills += (int) Math.round(turrets.get(i).maxKills*0.25);
                 turrets.get(i).lvlCheck();
+                System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Turret " + i + " Has " + turrets.get(i).kills + " Kills");
+                System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Turret " + i + " Is Level" + turrets.get(i).Level);
             }
             costs.set(index,(int) Math.round(costs.get(index)*1.25));
+            System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Player Has " + player.cash + " Money");
         }
         return costs.get(index);
     }
@@ -309,8 +340,10 @@ public class Controller {
             player.cash-=costs.get(index);
             for (int i = 0; i < turrets.size(); i++) {
                 turrets.get(i).RoF += 0.05;
+                System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Turret " + i + " Has a RoF of " + turrets.get(i).RoF);
             }
             costs.set(index,(int) Math.round(costs.get(index)*1.25));
+            System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Player Has " + player.cash + " Money");
         }
         return costs.get(index);
     }
@@ -318,10 +351,13 @@ public class Controller {
         if (player.cash >= cost) {
             player.cash-=cost;
             player.EXP+= (cost/player.Level);
+            System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Player Gained " + (cost/player.Level) + " EXP");
+            System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Player Has " + player.cash + " Money");
             player.checkLevel();
         }
     }
     private void newGame() {
+        System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": New Game");
         String json = JSONLoader.parseFileToString(context, "Player.json");
         try {
             JSONObject obj = new JSONObject(json);
@@ -336,9 +372,22 @@ public class Controller {
         }
     }
     private void loadGame() {
-
+        System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Load Game");
+        String json = JSONLoader.parseFileToString(context, "Player.json");
+        try {
+            JSONObject obj = new JSONObject(json);
+            player.Health = player.maxHealth = obj.getInt("Health");
+            player.cash = obj.getInt("Cash");
+            player.View = obj.getInt("View");
+            player.Level = obj.getInt("Level");
+            player.maxEXP = obj.getInt("EXP");
+            player.EXP = 0;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
     private void Save() {
+        System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Saving");
         try {
             JSONObject obj = new JSONObject("");
             JSONObject players = new JSONObject("");
@@ -379,11 +428,13 @@ public class Controller {
                 Oturret.put("Range", turrets.get(i).Range);
                 Oturret.put("RoF", turrets.get(i).RoF);
                 Oturret.put("URL", turrets.get(i).url);
+                Oturret.put("Level", turrets.get(i).Level);
                 Aturrets.put(Oturret);
             }
             obj.put("Player", players);
             obj.put("Enemies", Aenemies);
             obj.put("Turrets", Aturrets);
+            System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Saved");
         } catch (JSONException e) {
             e.printStackTrace();
         }

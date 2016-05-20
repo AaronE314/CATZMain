@@ -14,7 +14,7 @@
       "RoF": "2.02",
       "Cost": "200",
       "Name": "TWO",
-      "URL": "http://vignette4.wikia.nocookie.net/starcraft/images/9/9c/AutoTurret_SC2_Art1.jpg/revision/latest?cb=20081030000857"
+      "URL": "http://baw-weapons.yez.dk/uploads/7/5/5/2/7552490/8865613_orig.jpg"
     },
     {
       "Damage": "300",
@@ -22,15 +22,15 @@
       "RoF": "3.03",
       "Cost": "300",
       "Name": "THREE",
-      "URL": "http://vignette4.wikia.nocookie.net/starcraft/images/9/9c/AutoTurret_SC2_Art1.jpg/revision/latest?cb=20081030000857"
+      "URL": "http://img12.deviantart.net/2c7b/i/2009/341/e/9/auto_turret_by_meckanicalmind.jpg"
     },
     {
       "Damage": "400",
       "Range": "4.04",
       "RoF": "4.04",
       "Cost": "400",
-      "Name": "FOUR",
-      "URL": "http://vignette4.wikia.nocookie.net/starcraft/images/9/9c/AutoTurret_SC2_Art1.jpg/revision/latest?cb=20081030000857"
+      "Name": "PORTAL",
+      "URL": "http://www.thinkgeek.com/images/products/zoom/f398_portal2_turret_statue.jpg"
     }
   ]
 }
