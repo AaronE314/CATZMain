@@ -1,6 +1,7 @@
 package menu.catz.aaron.catzmain;
 
 import android.app.FragmentManager;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -53,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         assert toolbar != null;
         setSupportActionBar(toolbar);
-
         //Grab new Game from Starting Activity
         Bundle getBasket = getIntent().getExtras();
         Boolean newGame = getBasket.getBoolean("NewGame");
