@@ -99,7 +99,7 @@ public class ShopFragment extends Fragment {
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                control.newTurret(name.get(index), damage.get(index), range.get(index), price.get(index), RoF.get(index), urls.get(index));
+                control.newTurret(name.get(index), damage.get(index), range.get(index), price.get(index), RoF.get(index), urls.get(index), img.get(index));
                 txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
             }
         });
@@ -125,19 +125,22 @@ public class ShopFragment extends Fragment {
             price.add(obj.getInt("Cost"));
             url = obj.getString("URL");
             urls.add(url);
+            img.add(BitmapFactory.decodeResource(getResources(), R.raw.error));
         }
-        control.bitty.setOnLoadCallback(new BitmapTask().new OnLoadCallback(){
-            @Override
-            public void onLoad(Bitmap bitmap) {
-                img.add(bitmap);
-                loaded = true;
-            }
-        });
+        if (control.isConnected()) {
         for (int i = 0; i < urls.size(); i++) {
+            final int ind = i;
+            control.bitty.setOnLoadCallback(new BitmapTask().new OnLoadCallback(){
+                @Override
+                public void onLoad(Bitmap bitmap) {
+                    img.set(ind, bitmap);
+                    loaded = true;
+                }
+            });
             control.bitty.loadBitmap(urls.get(i));
             while (!loaded) {}
             loaded = false;
-        }
+        }}
         loaded = true;
     }
     private void updateInfo(int index) {

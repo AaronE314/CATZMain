@@ -51,8 +51,7 @@ public class OptionsFragment extends Fragment {
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                //TODO control.Save();
+            public void onClick(View v) {control.Save();
             }
         });
 

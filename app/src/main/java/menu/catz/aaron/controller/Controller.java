@@ -1,7 +1,9 @@
 package menu.catz.aaron.controller;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -55,10 +57,10 @@ public class Controller {
         moveEnemy();
         newEnemy();
     }
-    public void newTurret(String _NAME, int _DAMAGE, double _RANGE, int _PRICE, double _RoF, String _URL) {
+    public void newTurret(String _NAME, int _DAMAGE, double _RANGE, int _PRICE, double _RoF, String _URL, Bitmap _BITMAP) {
         if (player.cash >= _PRICE) {
             player.cash -= _PRICE;
-            turrets.add(new Turret(player.pos, _NAME, _DAMAGE, _RANGE, _RoF, _URL));
+            turrets.add(new Turret(player.pos, _NAME, _DAMAGE, _RANGE, _RoF, _URL, _BITMAP));
             System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Creating New Turret With ID: " + (turrets.size()-1));
             scheduleTAttack();
         }
@@ -202,6 +204,7 @@ public class Controller {
     }
     private void enemyAttack(int index) {
         final int ind = index;
+        System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Enemy " + index + " Is Attempting To Attack The Player");
         if (enemies.get(index).pos.latitude == player.pos.latitude && enemies.get(index).pos.longitude == player.pos.longitude) {
             player.Health-= enemies.get(index).dmg;
             System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Enemy " + index + " Has Attacked The Player");
@@ -367,6 +370,7 @@ public class Controller {
             player.Level = obj.getInt("Level");
             player.maxEXP = obj.getInt("EXP");
             player.EXP = 0;
+            Save();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -386,11 +390,11 @@ public class Controller {
             e.printStackTrace();
         }
     }
-    private void Save() {
+    public void Save() {
         System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Saving");
         try {
-            JSONObject obj = new JSONObject("");
-            JSONObject players = new JSONObject("");
+            JSONObject obj = new JSONObject();
+            JSONObject players = new JSONObject();
             JSONArray Aturrets = new JSONArray();
             JSONArray Aenemies = new JSONArray();
             players.put("maxHealth", player.maxHealth);
@@ -403,7 +407,7 @@ public class Controller {
             players.put("Lat", player.pos.latitude);
             players.put("Long", player.pos.longitude);
             for (int i = 0; i < enemies.size(); i++) {
-                JSONObject Oenemy = new JSONObject("");
+                JSONObject Oenemy = new JSONObject();
                 Oenemy.put("atckSpeed", enemies.get(i).atckSpeed);
                 Oenemy.put("cash", enemies.get(i).cash);
                 Oenemy.put("dmg", enemies.get(i).dmg);
@@ -418,7 +422,7 @@ public class Controller {
                 Aenemies.put(Oenemy);
             }
             for (int i = 0; i < turrets.size(); i++) {
-                JSONObject Oturret = new JSONObject("");
+                JSONObject Oturret = new JSONObject();
                 Oturret.put("Dmg", turrets.get(i).Dmg);
                 Oturret.put("kills", turrets.get(i).kills);
                 Oturret.put("maxKills", turrets.get(i).maxKills);
@@ -434,10 +438,16 @@ public class Controller {
             obj.put("Player", players);
             obj.put("Enemies", Aenemies);
             obj.put("Turrets", Aturrets);
+            FileHandler file = new FileHandler(context, "Data.json");
+            file.writeToFile(obj.toString());
             System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Saved");
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public boolean isConnected() {
+        ConnectivityManager connectivityManager =  (ConnectivityManager)context.getSystemService(context.CONNECTIVITY_SERVICE);
+        return connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting();
     }
 }
 //Latitude from -85 to 85

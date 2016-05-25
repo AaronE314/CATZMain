@@ -220,7 +220,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mMap.addMarker(new MarkerOptions().position(control.enemies.get(i).pos).title(String.valueOf(control.enemies.get(i).Health) + "/" + String.valueOf(control.enemies.get(i).maxHealth)));
         }
         for (int i = 0; i < control.turrets.size(); i++) {
-            mMap.addMarker(new MarkerOptions().position(control.turrets.get(i).pos).title(control.turrets.get(i).Name));
+            mMap.addGroundOverlay(control.turrets.get(i).ground);
+            //mMap.addMarker(new MarkerOptions().position(control.turrets.get(i).pos).title(control.turrets.get(i).Name));
         }
     }
 
