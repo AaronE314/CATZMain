@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!--<item
-        android:id="@+id/action_settings"
+    <item
+        android:id="@+id/player"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />-->
+        android:title="Player"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/turrets"
+        android:orderInCategory="100"
+        android:title="Turrets"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/enemies"
+        android:orderInCategory="100"
+        android:title="Enemies"
+        app:showAsAction="never" />
 </menu>

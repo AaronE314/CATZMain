@@ -2,7 +2,10 @@ package menu.catz.aaron.catzmain;
 
 import android.app.FragmentManager;
 import android.content.pm.ActivityInfo;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -13,6 +16,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,7 +34,7 @@ import menu.catz.aaron.controller.*;
 
 //has to implement NavigationView.OnNavigationItemSelectedListener for the navigation drawer
 //and have to implement OnMapReadyCallback for map
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, SurfaceHolder.Callback{
 
     //Video on how to set up fragments with navigation drawer
     //https://www.youtube.com/watch?annotation_id=annotation_2755209737&feature=iv&src_vid=ZQSu48J9TBg&v=tguOfRD8vYo
@@ -42,6 +50,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private OptionsFragment option;
     private UpgradesFragment upgrades;
     private Toolbar toolbar;
+    private SurfaceView surfaceView;
+    private SurfaceHolder surfaceHolder;
+    private Spinner spSelected;
     private android.support.v4.app.FragmentManager sFm;
 
     @Override
@@ -59,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Boolean newGame = getBasket.getBoolean("NewGame");
         System.out.println("New Game = " + newGame);
 
-
         //setting up Drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -76,6 +86,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         shop = new ShopFragment();
         upgrades = new UpgradesFragment();
         option = new OptionsFragment();
+
+        spSelected = (Spinner) findViewById(R.id.spSelected);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getApplicationContext(), R.array.planets_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spSelected.setAdapter(adapter);
+
+        //setting up Surface View
+        getWindow().setFormat(PixelFormat.UNKNOWN);
+        surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
+        assert surfaceView != null;
+        surfaceHolder = surfaceView.getHolder();
+        surfaceHolder.addCallback(this);
+        surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+
 
         option.setInfo(control, this);
         upgrades.setControl(control);
@@ -145,17 +169,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     //show map if already added
                     sFm.beginTransaction().show(supportMapFragment).commit();
                 }
+                surfaceView.setVisibility(View.VISIBLE);
+
                 break;
             //switching fragments
             case R.id.nav_store:
                 fm.beginTransaction().replace(R.id.content_frame, shop).commit();
                 shop.setInfo(control, this.getBaseContext());
+                surfaceView.setVisibility(View.INVISIBLE);
                 break;
             case R.id.nav_upgrades:
                 fm.beginTransaction().replace(R.id.content_frame, upgrades).commit();
+                surfaceView.setVisibility(View.INVISIBLE);
                 break;
             case R.id.nav_options:
                 fm.beginTransaction().replace(R.id.content_frame, option).commit();
+                surfaceView.setVisibility(View.INVISIBLE);
                 break;
             default:
                 break;
@@ -167,12 +196,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    //Called when map is ready
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
     }
 
+    //Called when map is ready
     @Override
     public void onMapReady(GoogleMap googleMap) {
         int sSelectedMap = GoogleMap.MAP_TYPE_HYBRID;
@@ -226,4 +255,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        Canvas canvas = null;
+        try {
+            canvas = surfaceHolder.lockCanvas();
+            synchronized (surfaceHolder) {
+                canvas.drawColor(Color.WHITE);
+                Paint paint = new Paint();
+                paint.setColor(Color.RED);
+                paint.setTextSize(100);
+                canvas.drawText("Hello", 200, 100, paint);
+            }
+        } catch (Exception e) {
+            //Log.e(TAG, "run() lockCanvas()", e);
+        } finally {
+            if (canvas != null) {
+                surfaceHolder.unlockCanvasAndPost(canvas);
+            }
+        }
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {}
 }

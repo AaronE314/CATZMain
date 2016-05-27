@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import menu.catz.aaron.catzmain.R;
-
+@Deprecated
 public class MainFragment extends Fragment {
 
     //Creates the view of the fragment from the proper XML file in layout

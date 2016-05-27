@@ -62,10 +62,6 @@ public class ShopFragment extends Fragment {
         name = new ArrayList<>();
         img = new ArrayList<>();
         urls = new ArrayList<>();
-        imageId.add(R.drawable.map_icon);
-        imageId.add(R.drawable.options_icon);
-        imageId.add(R.drawable.shop_icon);
-        imageId.add(R.drawable.upgrade_icon);
         txtCash.setText("Cash: $" + String.valueOf(control.player.cash));
         try {
             load();

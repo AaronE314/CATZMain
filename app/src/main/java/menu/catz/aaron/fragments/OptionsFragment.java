@@ -59,7 +59,7 @@ public class OptionsFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 sSelectedMap = spMapType.getSelectedItem().toString();
-                //TODO Save Setting to cloud
+                //TODO Save Setting to drive
             }
 
             @Override
@@ -74,7 +74,7 @@ public class OptionsFragment extends Fragment {
                 } else {
                     sSelectedMock = null;
                 }
-                //TODO Save Setting to cloud
+                //TODO Save Setting to drive
             }
 
             @Override
