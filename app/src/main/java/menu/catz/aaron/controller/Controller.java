@@ -1,7 +1,9 @@
 package menu.catz.aaron.controller;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 
@@ -35,10 +37,9 @@ public class Controller {
     private Timer spawn, move;
     DateFormat df;
 
-    public Controller(Context _CONTEXT, MainActivity maps, Boolean newgame) {
+    public Controller(Context _CONTEXT) {
         context = _CONTEXT;
         df = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
-        player = new Player(context, maps);
         enemies = new ArrayList<>();
         turrets = new ArrayList<>();
         enemydata = new ArrayList<>();
@@ -47,6 +48,9 @@ public class Controller {
         spawn = new Timer();
         move = new Timer();
         bitty = new BitmapTask();
+    }
+    public void mapLoaded(MainActivity maps, Boolean newgame) {
+        player = new Player(context, maps);
         if (newgame) {
             newGame();
         } else {
@@ -89,8 +93,7 @@ public class Controller {
                     Lng = player.pos.longitude - Lng;
                 }
                 pos = new LatLng(Lat, Lng);
-
-                enemies.add(new Enemy(pos, enemydata.get(type)));
+                enemies.add(new Enemy(enemydata.get(type), bitty, false, pos));
                 for (int y = 2; y < player.Level; y += 2) {
                     enemies.get(enemies.size() - 1).lvlUp();
                 }
@@ -376,17 +379,33 @@ public class Controller {
         }
     }
     private void loadGame() {
-        System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Load Game");
-        String json = JSONLoader.parseFileToString(context, "Player.json");
+        System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Loading");
         try {
-            JSONObject obj = new JSONObject(json);
-            player.Health = player.maxHealth = obj.getInt("Health");
-            player.cash = obj.getInt("Cash");
-            player.View = obj.getInt("View");
-            player.Level = obj.getInt("Level");
-            player.maxEXP = obj.getInt("EXP");
-            player.EXP = 0;
-        } catch (JSONException e) {
+            FileHandler file = new FileHandler(context, "Data.json");
+            JSONObject obj = new JSONObject(file.readFromFile());
+            JSONArray ar;
+            JSONObject obj1 = obj.getJSONObject("Player");
+            player.cash = obj1.getInt("Cash");
+            player.Health = obj1.getInt("Health");
+            player.maxHealth = obj1.getInt("maxHealth");
+            player.View = obj1.getDouble("View");
+            player.EXP = obj1.getInt("EXP");
+            player.maxEXP = obj1.getInt("maxEXP");
+            player.Level = obj1.getInt("Level");
+            player.pos = new LatLng(obj1.getDouble("Lat"), obj1.getDouble("Long"));
+            ar = obj.getJSONArray("Enemies");
+            for (int i = 0; i < ar.length(); i++) {
+                obj1 = ar.getJSONObject(i);
+                enemies.add(new Enemy(obj1, bitty, true, new LatLng(0,0)));
+            }
+            ar = obj.getJSONArray("Turrets");
+            for (int i = 0; i < ar.length(); i++) {
+                obj1 = ar.getJSONObject(i);
+                turrets.add(new Turret(new LatLng(obj1.getDouble("lat"), obj1.getDouble("long")), obj1.getString("Name"), obj1.getInt("Dmg"), obj1.getDouble("Range"), obj1.getDouble("RoF"), obj1.getString("URL"), BitmapFactory.decodeResource(Resources.getSystem(), R.raw.error)));
+                turrets.get(i).additionalData(obj.getInt("kills"), obj.getInt("maxKills"), obj.getInt("Level"));
+            }
+            System.out.println("\n" + df.format(Calendar.getInstance().getTime()) + ": Loaded");
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -416,8 +435,6 @@ public class Controller {
                 Oenemy.put("maxHealth", enemies.get(i).maxHealth);
                 Oenemy.put("lat", enemies.get(i).pos.latitude);
                 Oenemy.put("long", enemies.get(i).pos.longitude);
-                Oenemy.put("height", enemies.get(i).ground.getHeight());
-                Oenemy.put("width", enemies.get(i).ground.getWidth());
                 Oenemy.put("URL", enemies.get(i).URL);
                 Aenemies.put(Oenemy);
             }

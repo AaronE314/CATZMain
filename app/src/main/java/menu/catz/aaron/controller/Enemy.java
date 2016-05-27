@@ -1,5 +1,10 @@
 package menu.catz.aaron.controller;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -8,6 +13,8 @@ import org.json.JSONObject;
 
 import java.util.Timer;
 
+import menu.catz.aaron.catzmain.R;
+
 public class Enemy {
     public LatLng pos;
     public int Health, maxHealth, atckSpeed, dmg, cash, EXP;
@@ -15,11 +22,17 @@ public class Enemy {
     private double speed;
     public Timer attack;
     public String URL = "";
-    GroundOverlayOptions ground;
-    Enemy (LatLng _POS, JSONObject obj) {
+    private Bitmap bit;
+    public GroundOverlayOptions ground;
+    Enemy (JSONObject obj, BitmapTask bitty, Boolean old, LatLng _POS) {
         pos = _POS;
-        load(obj);
-        //GroundOverlayOptions newarkMap = new GroundOverlayOptions().image(BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922)).position(pos, 1000f);
+        bit = BitmapFactory.decodeResource(Resources.getSystem(), R.raw.error);
+        if (old) {
+            loadOld(obj, bitty);
+        } else {
+            loadNew(obj, bitty);
+        }
+        ground = new GroundOverlayOptions().image(BitmapDescriptorFactory.fromBitmap(bit)).position(pos, 1000f, 1000f);
         attack = new Timer();
     }
     public void move (LatLng _POS) {
@@ -46,7 +59,29 @@ public class Enemy {
         }
         pos = new LatLng(tLat, tLong);
     }
-    private void load(JSONObject obj) {
+    private void loadOld(JSONObject obj, BitmapTask bitty) {
+        try {
+            atckSpeed = obj.getInt("atckSpeed");
+            cash = obj.getInt("cash");
+            dmg = obj.getInt("dmg");
+            EXP = obj.getInt("EXP");
+            Health = obj.getInt("Health");
+            maxHealth = obj.getInt("maxHealth");
+            URL = obj.getString("URL");
+            pos = new LatLng(obj.getDouble("lat"), obj.getDouble("long"));
+            bitty.setOnLoadCallback(new BitmapTask().new OnLoadCallback(){
+                @Override
+                public void onLoad(Bitmap bitmap) {
+                    bit = bitmap;
+                    ground.image(BitmapDescriptorFactory.fromBitmap(bit));
+                }
+            });
+            bitty.loadBitmap(URL);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    private void loadNew(JSONObject obj, BitmapTask bitty) {
         try {
             maxHealth = Health = obj.getInt("Health");
             speed = obj.getDouble("Speed");
@@ -55,6 +90,15 @@ public class Enemy {
             dmg = obj.getInt("Damage");
             cash = obj.getInt("Money");
             EXP = obj.getInt("EXP");
+            URL = obj.getString("URL");
+            bitty.setOnLoadCallback(new BitmapTask().new OnLoadCallback(){
+                @Override
+                public void onLoad(Bitmap bitmap) {
+                    bit = bitmap;
+                    ground.image(BitmapDescriptorFactory.fromBitmap(bit));
+                }
+            });
+            bitty.loadBitmap(URL);
         } catch (JSONException e) {
             e.printStackTrace();
         }

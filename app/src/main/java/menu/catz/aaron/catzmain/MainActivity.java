@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private UpgradesFragment upgrades;
     private Toolbar toolbar;
     private android.support.v4.app.FragmentManager sFm;
+    private Boolean newGame = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //Grab new Game from Starting Activity
         Bundle getBasket = getIntent().getExtras();
-        Boolean newGame = getBasket.getBoolean("NewGame");
+        newGame = getBasket.getBoolean("NewGame");
         System.out.println("New Game = " + newGame);
 
 
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         //instantiate fragments
-        control = new Controller(this, this, newGame);
+        control = new Controller(this);
         shop = new ShopFragment();
         upgrades = new UpgradesFragment();
         option = new OptionsFragment();
@@ -177,7 +178,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onMapReady(GoogleMap googleMap) {
         int sSelectedMap = GoogleMap.MAP_TYPE_HYBRID;
         mMap = googleMap;
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        mMap.setMapType(sSelectedMap);
+        control.mapLoaded(this, newGame);
         mMap.addMarker(new MarkerOptions().position(control.player.pos).title(String.valueOf(control.player.Health) + "/" + String.valueOf(control.player.maxHealth)));
         new Thread() {
             @Override
@@ -208,20 +210,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void render() {
         mMap.clear();
-        /*CircleOptions circly = new CircleOptions();
-        circly.center(control.player.pos);
-        circly.radius(control.player.View);
-        circly.fillColor(Color.RED);
-        mMap.addCircle(circly);*/
         mMap.addCircle(new CircleOptions().center(control.player.pos).radius(100000f));
         mMap.addMarker(new MarkerOptions().position(control.player.pos).title(String.valueOf(control.player.Health) + "/" + String.valueOf(control.player.maxHealth)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(control.player.pos));
         for (int i = 0; i < control.enemies.size(); i++) {
-            mMap.addMarker(new MarkerOptions().position(control.enemies.get(i).pos).title(String.valueOf(control.enemies.get(i).Health) + "/" + String.valueOf(control.enemies.get(i).maxHealth)));
+            try {
+                mMap.addGroundOverlay(control.enemies.get(i).ground);
+            } catch (NullPointerException e) {
+            }
         }
         for (int i = 0; i < control.turrets.size(); i++) {
+            try {
             mMap.addGroundOverlay(control.turrets.get(i).ground);
-            //mMap.addMarker(new MarkerOptions().position(control.turrets.get(i).pos).title(control.turrets.get(i).Name));
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
         }
     }
 

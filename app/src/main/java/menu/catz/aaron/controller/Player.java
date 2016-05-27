@@ -12,7 +12,8 @@ import menu.catz.aaron.catzmain.MainActivity;
 public class Player {
     GPSTracker gps;
     public LatLng pos;
-    public int Health=200, maxHealth=200, View = 2, Level = 1, cash = 1000, EXP=0, maxEXP=100;
+    public int Health=200, maxHealth=200, Level = 1, cash = 1000, EXP=0, maxEXP=100;
+    public double View = 2;
     public CircleOptions circly;
     Context context;
     Player (Context _CONTEXT, MainActivity maps) {
@@ -27,7 +28,7 @@ public class Player {
     }
     public void updateLocation() {
         if (gps.pos!=null)
-        pos = gps.pos;
+        pos = new LatLng(gps.pos.latitude, gps.pos.longitude);
         circly.center(pos);
     }
     private void lvlUp() {

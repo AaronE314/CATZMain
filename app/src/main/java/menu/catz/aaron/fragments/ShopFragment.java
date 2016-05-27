@@ -16,11 +16,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import menu.catz.aaron.catzmain.JSONLoader;
 import menu.catz.aaron.catzmain.R;
@@ -144,7 +139,6 @@ public class ShopFragment extends Fragment {
         loaded = true;
     }
     private void updateInfo(int index) {
-        //ivTurret.setImageResource(imageId.get(index));
         if (loaded == true) {
             ivTurret.setImageBitmap(img.get(index));
         }
