@@ -43,8 +43,8 @@ public class FileHandler {
         }
     }
 
-    private ArrayList<String> readFromFile() {
-        ArrayList<String> sReturn = new ArrayList<>();
+    public String readFromFile() {
+        String sReturn = "";
 
         try {
             File file = new File(context.getFilesDir(),filename);
@@ -55,7 +55,7 @@ public class FileHandler {
             BufferedReader textReader = new BufferedReader(fIn);
             String sNextLine;
             while((sNextLine = textReader.readLine()) != null){
-                sReturn.add(sNextLine);
+                sReturn+=sNextLine;
             }
         }
         catch (Exception e) {

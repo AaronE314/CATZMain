@@ -36,4 +36,10 @@ public class Turret {
             Level++;
         }
     }
+
+    public void additionalData(int _kills, int _maxKills, int _level) {
+        kills = _kills;
+        maxKills = _maxKills;
+        Level = _level;
+    }
 }
