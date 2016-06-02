@@ -23,8 +23,8 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 
 public class DriveZAPI implements ZAPIClient.ZAPI {
-    class GoogleDocument {
-            GoogleDocument(ZAPIClient client) {
+    public class GoogleDocument {
+            public GoogleDocument(ZAPIClient client) {
                 this.client = client;
             }
 
@@ -32,7 +32,7 @@ public class DriveZAPI implements ZAPIClient.ZAPI {
             private ZAPIClient client;
             private DriveId driveId = null;
             private DriveFile file;
-            String content;
+            public String content;
 
             public void setID(String id){
                 driveId = DriveId.decodeFromString(id);

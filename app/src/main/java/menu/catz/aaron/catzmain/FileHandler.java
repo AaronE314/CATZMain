@@ -63,4 +63,10 @@ public class FileHandler {
         }
         return sReturn;
     }
+    public Boolean hasText() {
+        if (!readFromFile().equals("")) {
+            return true;
+        }
+        return false;
+    }
 }

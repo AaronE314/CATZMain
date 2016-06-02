@@ -20,10 +20,12 @@ import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import menu.catz.aaron.catzmain.DriveZAPI;
 import menu.catz.aaron.catzmain.JSONLoader;
 import menu.catz.aaron.catzmain.MainActivity;
 import menu.catz.aaron.catzmain.R;
 import menu.catz.aaron.catzmain.FileHandler;
+import menu.catz.aaron.catzmain.ZAPIClient;
 
 public class Controller {
     public Context context;
@@ -33,11 +35,15 @@ public class Controller {
     public ArrayList<String> ids;
     public ArrayList<Integer> costs;
     public BitmapTask bitty;
+    public ZAPIClient zClient;
+    public DriveZAPI zDrive;
     private ArrayList<JSONObject> enemydata;
     private Timer spawn, move;
-    DateFormat df;
+    private DateFormat df;
 
-    public Controller(Context _CONTEXT) {
+    public Controller(Context _CONTEXT, ZAPIClient _ZCLIENT, DriveZAPI _ZDRIVE) {
+        zClient = _ZCLIENT;
+        zDrive = _ZDRIVE;
         context = _CONTEXT;
         df = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
         enemies = new ArrayList<>();
@@ -465,6 +471,11 @@ public class Controller {
     public boolean isConnected() {
         ConnectivityManager connectivityManager =  (ConnectivityManager)context.getSystemService(context.CONNECTIVITY_SERVICE);
         return connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting();
+    }
+    public void writeToId(String id, String content){
+        DriveZAPI.GoogleDocument someDocument = zDrive.new GoogleDocument(zClient); //create a new class to represent the document
+        someDocument.content = content; //add content to the document
+        someDocument.WriteToId(id);
     }
 }
 //Latitude from -85 to 85

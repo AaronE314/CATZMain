@@ -1,0 +1,24 @@
+{
+  "Types": [
+    {
+      "Name": "None",
+      "id": "0"
+    },
+    {
+      "Name": "Normal",
+      "id": "1"
+    },
+    {
+      "Name": "Satellite",
+      "id": "2"
+    },
+    {
+      "Name": "Terrain",
+      "id": "3"
+    },
+    {
+      "Name": "Hybrid",
+      "id": "4"
+    }
+  ]
+}

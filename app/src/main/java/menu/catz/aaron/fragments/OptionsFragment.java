@@ -17,6 +17,11 @@ import android.widget.Switch;
 
 import com.google.android.gms.maps.GoogleMap;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import menu.catz.aaron.catzmain.FileHandler;
 import menu.catz.aaron.catzmain.JSONLoader;
 import menu.catz.aaron.catzmain.MainActivity;
 import menu.catz.aaron.catzmain.R;
@@ -45,7 +50,7 @@ public class OptionsFragment extends Fragment {
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spMapType.setAdapter(adapter2);
         spMock = (Spinner) rootView.findViewById(R.id.spMock);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.planets_array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.cities_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spMock.setAdapter(adapter);
 
@@ -59,7 +64,7 @@ public class OptionsFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 sSelectedMap = spMapType.getSelectedItem().toString();
-                //TODO Save Setting to drive
+                saveData();
             }
 
             @Override
@@ -72,9 +77,9 @@ public class OptionsFragment extends Fragment {
                 if (cbMock.isChecked()) {
                     sSelectedMock = spMock.getSelectedItem().toString();
                 } else {
-                    sSelectedMock = null;
+                    sSelectedMock = "Hybrid";
                 }
-                //TODO Save Setting to drive
+                saveData();
             }
 
             @Override
@@ -85,7 +90,30 @@ public class OptionsFragment extends Fragment {
         return rootView;
 
     }
-
+    private void saveData () {
+        Double lat = Double.NaN, lng = Double.NaN;
+        int num = -1;
+        try {
+            JSONObject obj = new JSONObject(new JSONLoader().parseFileToString(control.context, "Coordinates.json"));
+            JSONArray ar = obj.getJSONArray("Locations");
+            for (int i = 0; i < ar.length(); i++) {
+                if (ar.getJSONObject(i).getString("Name").equals(sSelectedMock)) {
+                    lat = ar.getJSONObject(i).getDouble("Lat");
+                    lng = ar.getJSONObject(i).getDouble("Long");
+                }
+            }
+            obj = new JSONObject(new JSONLoader().parseFileToString(control.context, "MapType.json"));
+            ar = obj.getJSONArray("Types");
+            for (int i = 0; i < ar.length(); i++) {
+                if (ar.getJSONObject(i).getString("Name").equals(sSelectedMap)) {
+                    num = ar.getJSONObject(i).getInt("id");
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        control.writeToId(new FileHandler(control.context, "data.txt").readFromFile(), cbMock.isChecked() + " " + lat + " " + lng + " " + num);
+    }
     public void setInfo(Controller _CONTROL, Context _CONTEXT) {
         context = _CONTEXT;
         control = _CONTROL;

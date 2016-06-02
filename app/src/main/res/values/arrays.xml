@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="planets_array">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
+    <string-array name="cities_array">
+        <item>Toronto</item>
+        <item>New York</item>
+        <item>LA</item>
+        <item>Prokhorovka</item>
+        <item>London</item>
+        <item>Tokyo</item>
+        <item>Sydney</item>
+        <item>Rio</item>
+        <item>Vancouver</item>
+        <item>Copenhagen</item>
+        <item>Madagascar</item>
+        <item>Kenema</item>
+        <item>Cario</item>
+        <item>Kuala Lumpur</item>
+        <item>Nagpur</item>
+        <item>Barcelona</item>
+        <item>Urodan</item>
+        <item>Turpan</item>
+        <item>Gan Gan</item>
+        <item>Nuuk</item>
     </string-array>
 
     <string-array name="MapType_array">

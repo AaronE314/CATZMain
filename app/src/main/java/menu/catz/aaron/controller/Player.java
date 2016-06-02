@@ -10,7 +10,7 @@ import com.google.android.gms.maps.model.LatLng;
 import menu.catz.aaron.catzmain.MainActivity;
 
 public class Player {
-    GPSTracker gps;
+    public GPSTracker gps;
     public LatLng pos;
     public int Health=200, maxHealth=200, Level = 1, cash = 1000, EXP=0, maxEXP=100;
     public double View = 2;

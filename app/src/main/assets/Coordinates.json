@@ -1,0 +1,104 @@
+{
+  "Locations": [
+    {
+      "Name": "Toronto",
+      "Lat": "43.6523",
+      "Long": "-79.3832"
+    },
+    {
+      "Name": "New York",
+      "Lat": "40.7128",
+      "Long": "-74.0059"
+    },
+    {
+      "Name": "LA",
+      "Lat": "34.0522",
+      "Long": "-118.2437"
+    },
+    {
+      "Name": "Prokhorovka",
+      "Lat": "51.0370",
+      "Long": "36.7303"
+    },
+    {
+      "Name": "London",
+      "Lat": "51.5074",
+      "Long": "-0.1278"
+    },
+    {
+      "Name": "Tokyo",
+      "Lat": "35.6895",
+      "Long": "139.6917"
+    },
+    {
+      "Name": "Sydney",
+      "Lat": "-33.8675",
+      "Long": "151.2070"
+    },
+    {
+      "Name": "Rio",
+      "Lat": "-22.9068",
+      "Long": "-43.1729"
+    },
+    {
+      "Name": "Vancouver",
+      "Lat": "49.2827",
+      "Long": "123.1207"
+    },
+    {
+      "Name": "Copenhagen",
+      "Lat": "55.6761",
+      "Long": "12.5683"
+    },
+    {
+      "Name": "Madagascar",
+      "Lat": "-18.7669",
+      "Long": "46.8691"
+    },
+    {
+      "Name": "Kenema",
+      "Lat": "7.8632",
+      "Long": "-11.1957"
+    },
+    {
+      "Name": "Cario",
+      "Lat": "30.0444",
+      "Long": "31.2357"
+    },
+    {
+      "Name": "Kuala Lumpur",
+      "Lat": "3.1390",
+      "Long": "101.6869"
+    },
+    {
+      "Name": "Nagpur",
+      "Lat": "21.1458",
+      "Long": "79.0882"
+    },
+    {
+      "Name": "Barcelona",
+      "Lat": "41.3851",
+      "Long": "2.1734"
+    },
+    {
+      "Name": "Urodan",
+      "Lat": "66.7025",
+      "Long": "155.4803"
+    },
+    {
+      "Name": "Turpan",
+      "Lat": "42.9514",
+      "Long": "89.1897"
+    },
+    {
+      "Name": "Gan Gan",
+      "Lat": "-42.5224",
+      "Long": "-68.2835"
+    },
+    {
+      "Name": "Nuuk",
+      "Lat": "64.1814",
+      "Long": "-51.6941"
+    }
+  ]
+}
