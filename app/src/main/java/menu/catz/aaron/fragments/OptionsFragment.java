@@ -30,8 +30,8 @@ import menu.catz.aaron.controller.Controller;
 public class OptionsFragment extends Fragment {
     Controller control;
     Context context;
-    private String sSelectedMock, sSelectedMap;
     private Spinner spMapType, spMock;
+    private String sSelectedMock, sSelectedMap;
     private CheckBox cbMock;
     private Button btnSave;
 
@@ -53,7 +53,6 @@ public class OptionsFragment extends Fragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.cities_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spMock.setAdapter(adapter);
-
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {control.Save();
@@ -114,6 +113,7 @@ public class OptionsFragment extends Fragment {
         }
         control.writeToId(new FileHandler(control.context, "data.txt").readFromFile(), cbMock.isChecked() + " " + lat + " " + lng + " " + num);
     }
+
     public void setInfo(Controller _CONTROL, Context _CONTEXT) {
         context = _CONTEXT;
         control = _CONTROL;
