@@ -26,8 +26,7 @@
     <FrameLayout
         android:id="@+id/map"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/spSelected">
+        android:layout_height="match_parent">
 
     </FrameLayout>
 
@@ -40,12 +39,5 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spSelected"
-        android:layout_gravity="left|top"
-        android:spinnerMode="dropdown" />
 
 </RelativeLayout>

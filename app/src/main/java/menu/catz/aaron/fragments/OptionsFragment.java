@@ -25,8 +25,8 @@ import menu.catz.aaron.controller.Controller;
 public class OptionsFragment extends Fragment {
     Controller control;
     Context context;
-    private String sSelectedMock, sSelectedMap;
     private Spinner spMapType, spMock;
+    private String sSelectedMock, sSelectedMap;
     private CheckBox cbMock;
     private Button btnSave;
 
@@ -48,7 +48,6 @@ public class OptionsFragment extends Fragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.planets_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spMock.setAdapter(adapter);
-
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {control.Save();
@@ -72,7 +71,7 @@ public class OptionsFragment extends Fragment {
                 if (cbMock.isChecked()) {
                     sSelectedMock = spMock.getSelectedItem().toString();
                 } else {
-                    sSelectedMock = null;
+                    sSelectedMock = "Hybrid";
                 }
                 //TODO Save Setting to drive
             }
@@ -85,6 +84,17 @@ public class OptionsFragment extends Fragment {
         return rootView;
 
     }
+
+    private AdapterView.OnItemSelectedListener btnListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        }
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
 
     public void setInfo(Controller _CONTROL, Context _CONTEXT) {
         context = _CONTEXT;

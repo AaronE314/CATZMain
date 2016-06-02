@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
     private SurfaceView surfaceView;
     private SurfaceHolder surfaceHolder;
-    private Spinner spSelected;
     private android.support.v4.app.FragmentManager sFm;
     private Boolean newGame = null;
 
@@ -88,11 +87,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         upgrades = new UpgradesFragment();
         option = new OptionsFragment();
 
-        spSelected = (Spinner) findViewById(R.id.spSelected);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getApplicationContext(), R.array.planets_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spSelected.setAdapter(adapter);
-
         //setting up Surface View
         getWindow().setFormat(PixelFormat.UNKNOWN);
         surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
@@ -100,7 +94,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-
 
         option.setInfo(control, this);
         upgrades.setControl(control);
@@ -262,13 +255,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void surfaceCreated(SurfaceHolder holder) {
         Canvas canvas = null;
         try {
+
             canvas = surfaceHolder.lockCanvas();
             synchronized (surfaceHolder) {
-                canvas.drawColor(Color.WHITE);
+                canvas.drawColor(Color.LTGRAY);
                 Paint paint = new Paint();
-                paint.setColor(Color.RED);
-                paint.setTextSize(100);
-                canvas.drawText("Hello", 200, 100, paint);
+                paint.setColor(Color.BLACK);
+                paint.setTextSize(50);
+                canvas.drawText("Health: " + control.player.Health, 600, 100, paint);
+                canvas.drawText("Cash: " + control.player.cash, 50, 100, paint);
             }
         } catch (Exception e) {
             //Log.e(TAG, "run() lockCanvas()", e);
