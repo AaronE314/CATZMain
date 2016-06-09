@@ -58,9 +58,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private SurfaceHolder surfaceHolder;
     private android.support.v4.app.FragmentManager sFm;
     private Boolean newGame = null;
-    private ZAPIClient zClient;
-    private DriveZAPI zDrive;
-    private String data;
     private int sSelectedMap = -1;
 
     @Override
@@ -68,52 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        zClient = new ZAPIClient();
-        zDrive = new DriveZAPI();
-        zClient.AddAPI(zDrive);
-        zClient.registerClient(this, this);
-        /*if (new FileHandler(getApplicationContext(), "data.txt").hasText()) {
-            zClient.addCallback(zClient.new onCreateCallback(){
-                @Override
-                public void onCreate() {
-                    DriveZAPI.GoogleDocument settingsDoc = zDrive.new GoogleDocument(zClient){
-                        @Override
-                        public void LoadFromId(String id) {
-                            //Boolean + Lat + Long + Map Id
-                            data = id;
-                            editdata();
-                        }
-                    };
 
-                    settingsDoc.LoadFromId(new FileHandler(getApplicationContext(), "data.txt").readFromFile());
-                }
-            });
-        } else {*/
-            zClient.addCallback(zClient.new onCreateCallback() {
-                @Override
-                public void onCreate() {
-                    //Create a new GoogleDocument
-                    DriveZAPI.GoogleDocument myDoc = zDrive.new GoogleDocument(zClient) {
-                        //Sets up code to be run when the document is successfully generated
-                        @Override
-                        public void onGenerateSuccess(String id) {
-                            content = "";
-                            this.Write();
-                        }
-
-                        //Sets up code to be run when the document is successfully written to
-                        @Override
-                        public void onWriteSuccess() {
-                            System.out.println("Made a file with id: " + getID());
-                            new FileHandler(getApplicationContext(), "data.txt").writeToFile(getID());
-                        }
-                    };
-
-                    //Generates document
-                    myDoc.generateDocument("Wafflepocalypse Settings", true);
-                }
-            });
-        //}
         //Creating a new instance of the supportMapFragment
         supportMapFragment = SupportMapFragment.newInstance();
 
@@ -138,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         //instantiate fragments
-        control = new Controller(this, zClient, zDrive);
+        control = new Controller(this);
         shop = new ShopFragment();
         upgrades = new UpgradesFragment();
         option = new OptionsFragment();
@@ -290,12 +242,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void render() {
         mMap.clear();
-        mMap.addCircle(new CircleOptions().center(control.player.pos).radius(100000f));
+        mMap.addCircle(control.player.circly);
         mMap.addMarker(new MarkerOptions().position(control.player.pos).title(String.valueOf(control.player.Health) + "/" + String.valueOf(control.player.maxHealth)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(control.player.pos));
         for (int i = 0; i < control.enemies.size(); i++) {
             try {
-                mMap.addGroundOverlay(control.enemies.get(i).ground);
+                mMap.addMarker(new MarkerOptions().position(control.enemies.get(i).pos).title(String.valueOf(control.enemies.get(i).Health) + "/" + String.valueOf(control.enemies.get(i).maxHealth)));
             } catch (NullPointerException e) {
             }
         }
@@ -330,6 +282,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 surfaceHolder.unlockCanvasAndPost(canvas);
             }
         }
+        new Thread() {
+            @Override
+            public void run() {
+                PseudoTimer pT = new PseudoTimer();
+                while (true) {
+                    pT.Update();
+                    if (pT.frameReady(30f)) {
+                        new PseudoTimer().new UIThreadCommand() {
+                            @Override
+                            public void runCommand() {
+                                surfaceUpdate();
+                            }
+                        }.start(MainActivity.this);
+
+                    }
+                }
+            }
+        }.start();
     }
 
     @Override
@@ -339,16 +309,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
     }
-    public void editdata() {
-        String datas[] = data.split(" ");
-        if (datas[0].equals("true")) {
-            try {
-                control.player.gps.stopUsingGPS();
-            } catch (Exception e) {
+    private void surfaceUpdate () {
+        Canvas canvas = null;
+        try {
+            canvas = surfaceHolder.lockCanvas();
+            synchronized (surfaceHolder) {
+                canvas.drawColor(Color.LTGRAY);
+                Paint paint = new Paint();
+                paint.setColor(Color.BLACK);
+                paint.setTextSize(50);
+                canvas.drawText("Health: " + control.player.Health, 600, 100, paint);
+                canvas.drawText("Cash: " + control.player.cash, 50, 100, paint);
             }
-            control.player.pos = new LatLng(Double.valueOf(datas[1]), Double.valueOf(datas[2]));
+        } catch (Exception e) {
+            //Log.e(TAG, "run() lockCanvas()", e);
+        } finally {
+            if (canvas != null) {
+                surfaceHolder.unlockCanvasAndPost(canvas);
+            }
         }
-        sSelectedMap = Integer.valueOf(datas[3]);
     }
 }
 

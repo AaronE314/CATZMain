@@ -12,8 +12,8 @@ import menu.catz.aaron.catzmain.MainActivity;
 public class Player {
     public GPSTracker gps;
     public LatLng pos;
-    public int Health=200, maxHealth=200, Level = 1, cash = 1000, EXP=0, maxEXP=100;
-    public double View = 2;
+    public int Health=200, maxHealth=200, Level = 1, cash = 500, EXP=0, maxEXP=100;
+    public double View = 0.5;
     public CircleOptions circly;
     Context context;
     Player (Context _CONTEXT, MainActivity maps) {

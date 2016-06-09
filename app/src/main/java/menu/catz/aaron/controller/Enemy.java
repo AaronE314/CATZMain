@@ -23,7 +23,7 @@ public class Enemy {
     public Timer attack;
     public String URL = "";
     private Bitmap bit;
-    public GroundOverlayOptions ground;
+    //public GroundOverlayOptions ground;
     Enemy (JSONObject obj, BitmapTask bitty, Boolean old, LatLng _POS) {
         pos = _POS;
         bit = BitmapFactory.decodeResource(Resources.getSystem(), R.raw.error);
@@ -32,7 +32,7 @@ public class Enemy {
         } else {
             loadNew(obj, bitty);
         }
-        ground = new GroundOverlayOptions().image(BitmapDescriptorFactory.fromBitmap(bit)).position(pos, 1000f, 1000f);
+        //ground = new GroundOverlayOptions().image(BitmapDescriptorFactory.fromBitmap(bit)).position(pos, 1000f, 1000f);
         attack = new Timer();
     }
     public void move (LatLng _POS) {
@@ -73,7 +73,7 @@ public class Enemy {
                 @Override
                 public void onLoad(Bitmap bitmap) {
                     bit = bitmap;
-                    ground.image(BitmapDescriptorFactory.fromBitmap(bit));
+                    //ground.image(BitmapDescriptorFactory.fromBitmap(bit));
                 }
             });
             bitty.loadBitmap(URL);
@@ -95,7 +95,7 @@ public class Enemy {
                 @Override
                 public void onLoad(Bitmap bitmap) {
                     bit = bitmap;
-                    ground.image(BitmapDescriptorFactory.fromBitmap(bit));
+                    //ground.image(BitmapDescriptorFactory.fromBitmap(bit));
                 }
             });
             bitty.loadBitmap(URL);
