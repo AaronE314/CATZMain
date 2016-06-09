@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import menu.catz.aaron.catzmain.MainActivity;
 import menu.catz.aaron.catzmain.R;
 import menu.catz.aaron.controller.Controller;
 

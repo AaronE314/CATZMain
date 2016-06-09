@@ -12,11 +12,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+
 import menu.catz.aaron.catzmain.JSONLoader;
 import menu.catz.aaron.catzmain.R;
 import menu.catz.aaron.controller.BitmapTask;

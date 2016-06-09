@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.system.ErrnoException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
-import android.widget.Switch;
-
-import com.google.android.gms.maps.GoogleMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,7 +19,6 @@ import org.json.JSONObject;
 
 import menu.catz.aaron.catzmain.FileHandler;
 import menu.catz.aaron.catzmain.JSONLoader;
-import menu.catz.aaron.catzmain.MainActivity;
 import menu.catz.aaron.catzmain.R;
 import menu.catz.aaron.controller.Controller;
 

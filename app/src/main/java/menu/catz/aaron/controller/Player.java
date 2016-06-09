@@ -6,7 +6,6 @@ import android.graphics.Color;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 
-
 import menu.catz.aaron.catzmain.MainActivity;
 
 public class Player {
