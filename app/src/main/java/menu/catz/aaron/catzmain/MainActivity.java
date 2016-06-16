@@ -1,7 +1,6 @@
 package menu.catz.aaron.catzmain;
 
 import android.app.FragmentManager;
-import android.content.pm.ActivityInfo;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -19,22 +18,17 @@ import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
-import com.google.android.gms.drive.DriveApi;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CircleOptions;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.ArrayList;
-
-import menu.catz.aaron.fragments.*;
-import menu.catz.aaron.controller.*;
+import menu.catz.aaron.controller.Controller;
+import menu.catz.aaron.fragments.OptionsFragment;
+import menu.catz.aaron.fragments.ShopFragment;
+import menu.catz.aaron.fragments.UpgradesFragment;
 
 //has to implement NavigationView.OnNavigationItemSelectedListener for the navigation drawer
 //and have to implement OnMapReadyCallback for map
@@ -288,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 PseudoTimer pT = new PseudoTimer();
                 while (true) {
                     pT.Update();
-                    if (pT.frameReady(30f)) {
+                    if (pT.frameReady(1f)) {
                         new PseudoTimer().new UIThreadCommand() {
                             @Override
                             public void runCommand() {

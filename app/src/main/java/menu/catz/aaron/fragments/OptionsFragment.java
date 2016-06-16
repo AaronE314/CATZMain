@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.system.ErrnoException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
-import android.widget.Switch;
-
-import com.google.android.gms.maps.GoogleMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,7 +19,6 @@ import org.json.JSONObject;
 
 import menu.catz.aaron.catzmain.FileHandler;
 import menu.catz.aaron.catzmain.JSONLoader;
-import menu.catz.aaron.catzmain.MainActivity;
 import menu.catz.aaron.catzmain.R;
 import menu.catz.aaron.controller.Controller;
 
@@ -63,7 +58,7 @@ public class OptionsFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 sSelectedMap = spMapType.getSelectedItem().toString();
-                saveData();
+                //saveData();
             }
 
             @Override
@@ -78,7 +73,7 @@ public class OptionsFragment extends Fragment {
                 } else {
                     sSelectedMock = "Hybrid";
                 }
-                saveData();
+                //saveData();
             }
 
             @Override
@@ -111,7 +106,7 @@ public class OptionsFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        control.writeToId(new FileHandler(control.context, "data.txt").readFromFile(), cbMock.isChecked() + " " + lat + " " + lng + " " + num);
+        //control.writeToId(new FileHandler(control.context, "data.txt").readFromFile(), cbMock.isChecked() + " " + lat + " " + lng + " " + num);
     }
 
     public void setInfo(Controller _CONTROL, Context _CONTEXT) {

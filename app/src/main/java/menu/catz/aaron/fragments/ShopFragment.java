@@ -12,14 +12,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+
 import menu.catz.aaron.catzmain.JSONLoader;
 import menu.catz.aaron.catzmain.R;
-import menu.catz.aaron.controller.BitmapTask;
 import menu.catz.aaron.controller.Controller;
 
 public class ShopFragment extends Fragment {
@@ -118,7 +120,12 @@ public class ShopFragment extends Fragment {
             urls.add(url);
             img.add(BitmapFactory.decodeResource(getResources(), R.raw.error));
         }
-        if (control.isConnected()) {
+        img.set(0,BitmapFactory.decodeResource(getResources(), R.raw.turret1));
+        img.set(1,BitmapFactory.decodeResource(getResources(), R.raw.turret2));
+        img.set(2,BitmapFactory.decodeResource(getResources(), R.raw.turret3));
+        img.set(3,BitmapFactory.decodeResource(getResources(), R.raw.turret4));
+
+        /*if (control.isConnected()) {
         for (int i = 0; i < urls.size(); i++) {
             final int ind = i;
             control.bitty.setOnLoadCallback(new BitmapTask().new OnLoadCallback(){
@@ -131,7 +138,7 @@ public class ShopFragment extends Fragment {
             control.bitty.loadBitmap(urls.get(i));
             while (!loaded) {}
             loaded = false;
-        }}
+        }}*/
         loaded = true;
     }
     private void updateInfo(int index) {
@@ -139,7 +146,7 @@ public class ShopFragment extends Fragment {
             ivTurret.setImageBitmap(img.get(index));
         }
         txtName.setText(name.get(index));
-        txtPrice.setText("$" + price.get(index));
+        txtPrice.setText("Price: $" + price.get(index));
         txtDes.setText("RoF: " + String.valueOf(RoF.get(index)) + "\n Damage: " + String.valueOf(damage.get(index)) + "\n Range: " + range.get(index));
     }
 
