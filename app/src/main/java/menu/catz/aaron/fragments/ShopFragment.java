@@ -120,10 +120,10 @@ public class ShopFragment extends Fragment {
             urls.add(url);
             img.add(BitmapFactory.decodeResource(getResources(), R.raw.error));
         }
-        img.set(0,BitmapFactory.decodeResource(getResources(), R.raw.turret1));
+        img.set(0,BitmapFactory.decodeResource(getResources(), R.raw.sniper));
         img.set(1,BitmapFactory.decodeResource(getResources(), R.raw.turret2));
-        img.set(2,BitmapFactory.decodeResource(getResources(), R.raw.turret3));
-        img.set(3,BitmapFactory.decodeResource(getResources(), R.raw.turret4));
+        img.set(2,BitmapFactory.decodeResource(getResources(), R.raw.rocket_launcher));
+        img.set(3,BitmapFactory.decodeResource(getResources(), R.raw.prima_donna_turret));
 
         /*if (control.isConnected()) {
         for (int i = 0; i < urls.size(); i++) {
