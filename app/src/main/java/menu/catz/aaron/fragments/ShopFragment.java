@@ -121,7 +121,7 @@ public class ShopFragment extends Fragment {
             img.add(BitmapFactory.decodeResource(getResources(), R.raw.error));
         }
         img.set(0,BitmapFactory.decodeResource(getResources(), R.raw.sniper));
-        img.set(1,BitmapFactory.decodeResource(getResources(), R.raw.turret2));
+        img.set(1,BitmapFactory.decodeResource(getResources(), R.raw.machine_gun));
         img.set(2,BitmapFactory.decodeResource(getResources(), R.raw.rocket_launcher));
         img.set(3,BitmapFactory.decodeResource(getResources(), R.raw.prima_donna_turret));
 
